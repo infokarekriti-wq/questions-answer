@@ -59,14 +59,7 @@ color:#00aeea;
 line-height:1.5;
 }
 
-.badge{
-background:#00a3d7;
-color:#fff;
-padding:12px 22px;
-font-size:18px;
-font-weight:700;
-border-radius:12px;
-}
+
 
 /* HELP BOX */
 
@@ -245,11 +238,11 @@ font-size:24px;
 <div class="top-bar">
 
 <div class="heading">
-B. Fill in the blanks. Use the words from the help box.
+ Fill in the blanks. Use the words from the help box.
 </div>
 
 <div class="badge">
-REMEMBERING
+
 </div>
 
 </div>
@@ -312,7 +305,7 @@ data-answer="park">
 <div class="button-area">
 
 <button class="btn check-btn" onclick="checkAnswers()">
-Check Answers
+Submit 
 </button>
 
 <button class="btn reset-btn" onclick="resetQuiz()">
@@ -372,9 +365,6 @@ document.getElementById("score").innerText =
 
 setTimeout(()=>{
 
-alert(
-`✅ Correct Answers: ${score}\n❌ Incorrect Answers: ${incorrect}`
-);
 
 },300);
 
