@@ -1,124 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Family Concept Quiz</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .correct { border-color: #10b981; background-color: #ecfdf5; }
-        .incorrect { border-color: #ef4444; background-color: #fef2f2; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Fill in the blanks</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+min-height:100vh;
+background:#ffffff;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.quiz-box{
+width:100%;
+max-width:950px;
+background:#f7f7f7;
+border-radius:22px;
+padding:28px 24px 35px;
+border:4px solid #00bdf2;
+box-shadow:0 6px 18px rgba(0,0,0,0.12);
+}
+
+.heading{
+font-size:22px;
+font-weight:bold;
+color:#00a6d6;
+margin-bottom:18px;
+font-family:Georgia,serif;
+}
+
+.word-box{
+background:#f7dfe7;
+display:inline-block;
+padding:10px 20px;
+font-size:20px;
+font-family:Georgia,serif;
+margin-bottom:24px;
+border-radius:4px;
+color:#00838f;
+font-weight:bold;
+}
+
+.question-box{
+margin-bottom:20px;
+}
+
+.question{
+font-size:20px;
+font-family:Georgia,serif;
+color:#5a2d82;
+line-height:1.9;
+}
+
+.blank-input{
+width:170px;
+border:none;
+border-bottom:2px solid #666;
+background:transparent;
+font-size:20px;
+font-family:Georgia,serif;
+text-align:center;
+outline:none;
+padding:2px 4px;
+margin:0 4px;
+color:#d81b60;
+font-weight:bold;
+}
+
+.blank-input.correct{
+border-bottom:3px solid #2e7d32;
+color:#1b5e20;
+font-weight:bold;
+}
+
+.blank-input.wrong{
+border-bottom:3px solid #c62828;
+color:#b71c1c;
+font-weight:bold;
+}
+
+.buttons{
+text-align:center;
+margin-top:26px;
+}
+
+.check-btn,
+.reset-btn{
+background:#ff9800;
+color:#fff;
+border:none;
+padding:11px 28px;
+border-radius:28px;
+font-size:15px;
+font-weight:bold;
+cursor:pointer;
+margin:8px;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+transition: transform 0.1s;
+}
+
+.check-btn:active,
+.reset-btn:active{
+transform: scale(0.95);
+}
+
+.check-btn:hover,
+.reset-btn:hover{
+background:#f57c00;
+}
+
+.result{
+margin-top:18px;
+text-align:center;
+font-size:22px;
+font-weight:bold;
+color:#003db8;
+}
+
+@media(max-width:768px){
+
+.question{
+font-size:17px;
+}
+
+.blank-input{
+width:120px;
+font-size:17px;
+}
+
+.word-box{
+font-size:16px;
+}
+
+}
+
+</style>
 </head>
-<body class="bg-gray-50 min-h-screen py-12 px-4">
-    <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8">
-        <h1 class="text-3xl font-bold text-center text-indigo-700 mb-2"></h1>
-        <p class="text-center text-gray-600 mb-4">Fill in the blanks. </p>
 
-        <div class="flex flex-wrap justify-center gap-3 mb-8 p-4 bg-indigo-50 rounded-lg border-2 border-dashed border-indigo-200">
-            <span class="px-3 py-1 bg-white border border-indigo-200 rounded-md text-indigo-700 font-medium shadow-sm">related</span>
-            <span class="px-3 py-1 bg-white border border-indigo-200 rounded-md text-indigo-700 font-medium shadow-sm">family tree</span>
-            <span class="px-3 py-1 bg-white border border-indigo-200 rounded-md text-indigo-700 font-medium shadow-sm">joint</span>
-            <span class="px-3 py-1 bg-white border border-indigo-200 rounded-md text-indigo-700 font-medium shadow-sm">uncles and aunts</span>
-        </div>
+<body>
 
-        <form id="quizForm" class="space-y-8">
-            <!-- Question A -->
-            <div class="p-4 rounded-lg bg-gray-50 border border-gray-200">
-                <p class="text-lg text-gray-800 leading-relaxed">
-                    a. A family is a special group of people who are 
-                    <input type="text" data-answer="related" class="quiz-input border-b-2 border-gray-300 bg-transparent px-2 py-1 focus:outline-none focus:border-indigo-500 w-32 text-center font-medium" placeholder="...">
-                    to each other.
-                </p>
-            </div>
+<div class="quiz-box">
 
-            <!-- Question B -->
-            <div class="p-4 rounded-lg bg-gray-50 border border-gray-200">
-                <p class="text-lg text-gray-800 leading-relaxed">
-                    b. A 
-                    <input type="text" data-answer="family tree" class="quiz-input border-b-2 border-gray-300 bg-transparent px-2 py-1 focus:outline-none focus:border-indigo-500 w-40 text-center font-medium" placeholder="...">
-                    is a visual map that shows how different generations are connected.
-                </p>
-            </div>
+<div class="heading">
+ Fill in the blanks
+</div>
 
-            <!-- Question C -->
-            <div class="p-4 rounded-lg bg-gray-50 border border-gray-200">
-                <p class="text-lg text-gray-800 leading-relaxed">
-                    c. In a 
-                    <input type="text" data-answer="joint" class="quiz-input border-b-2 border-gray-300 bg-transparent px-2 py-1 focus:outline-none focus:border-indigo-500 w-24 text-center font-medium" placeholder="...">
-                    family, members often share the same house and kitchen.
-                </p>
-            </div>
+<center>
 
-            <!-- Question D -->
-            <div class="p-4 rounded-lg bg-gray-50 border border-gray-200">
-                <p class="text-lg text-gray-800 leading-relaxed">
-                    d. Your parents' brothers and sisters are known as your 
-                    <input type="text" data-answer="uncles and aunts" class="quiz-input border-b-2 border-gray-300 bg-transparent px-2 py-1 focus:outline-none focus:border-indigo-500 w-48 text-center font-medium" placeholder="...">
-                    .
-                </p>
-            </div>
+<div class="word-box">
+related, family tree, joint, uncles and aunts
+</div>
 
-            <div class="flex flex-col items-center gap-6 pt-6">
-                <div class="flex flex-wrap justify-center gap-4 w-full">
-                    <button type="submit" id="checkBtn" class="flex-1 min-w-[150px] bg-indigo-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-indigo-700 transition duration-300 shadow-md transform active:scale-95">
-                        Check Answer
-                    </button>
-                    <button type="button" id="resetBtn" class="flex-1 min-w-[150px] bg-white border-2 border-indigo-600 text-indigo-600 px-6 py-3 rounded-xl font-bold hover:bg-indigo-50 transition duration-300 shadow-sm transform active:scale-95">
-                        Reset Quiz
-                    </button>
-                </div>
-                <div id="resultMessage" class="text-lg font-bold p-3 rounded-lg w-full text-center hidden"></div>
-            </div>
-        </form>
-    </div>
+</center>
 
-    <script>
-        const form = document.getElementById('quizForm');
-        const inputs = document.querySelectorAll('.quiz-input');
-        const resultMsg = document.getElementById('resultMessage');
-        const resetBtn = document.getElementById('resetBtn');
+<div class="question-box">
 
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            let score = 0;
-            const total = inputs.length;
+<div class="question">
+a. A family is a special group of people who are 
+<input type="text" class="blank-input" id="q1"> to each other.
+</div>
 
-            inputs.forEach(input => {
-                const userAnswer = input.value.trim().toLowerCase();
-                const correctAnswer = input.dataset.answer.toLowerCase();
+</div>
 
-                if (userAnswer === correctAnswer) {
-                    input.classList.remove('incorrect', 'text-red-700');
-                    input.classList.add('correct', 'text-green-700');
-                    score++;
-                } else {
-                    input.classList.remove('correct', 'text-green-700');
-                    input.classList.add('incorrect', 'text-red-700');
-                    input.value = input.dataset.answer;
-                }
-                input.disabled = true;
-            });
+<div class="question-box">
 
-            resultMsg.textContent = `Score: ${score} / ${total}. The correct words have been filled in!`;
-            resultMsg.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-orange-100', 'text-orange-800');
-            
-            if (score === total) {
-                resultMsg.classList.add('bg-green-100', 'text-green-800');
-            } else {
-                resultMsg.classList.add('bg-orange-100', 'text-orange-800');
-            }
-        });
+<div class="question">
+b. A 
+<input type="text" class="blank-input" style="width:200px;" id="q2"> is a visual map that shows how different generations are connected.
+</div>
 
-        resetBtn.addEventListener('click', () => {
-            form.reset();
-            inputs.forEach(input => {
-                input.disabled = false;
-                input.classList.remove('correct', 'incorrect', 'text-green-700', 'text-red-700');
-                input.value = "";
-            });
-            resultMsg.classList.add('hidden');
-        });
-    </script>
+</div>
+
+<div class="question-box">
+
+<div class="question">
+c. In a 
+<input type="text" class="blank-input" id="q3"> family, members often share the same house and kitchen.
+</div>
+
+</div>
+
+<div class="question-box">
+
+<div class="question">
+d. Your parents' brothers and sisters are known as your 
+<input type="text" class="blank-input" style="width:250px;" id="q4">.
+</div>
+
+</div>
+
+<div class="buttons">
+
+<button class="check-btn" onclick="checkAnswers()">
+Check Answers
+</button>
+
+<button class="reset-btn" onclick="resetQuiz()">
+Reset
+</button>
+
+</div>
+
+<div class="result" id="result">
+Score: 0 / 4
+</div>
+
+</div>
+
+<script>
+
+const answers = {
+    q1:"related",
+    q2:"family tree",
+    q3:"joint",
+    q4:"uncles and aunts"
+};
+
+function checkAnswers(){
+    let score = 0;
+    Object.keys(answers).forEach(id=>{
+        const input = document.getElementById(id);
+        const userAnswer = input.value.trim().toLowerCase();
+        const correctAnswer = answers[id];
+
+        input.classList.remove("correct","wrong");
+
+        if(userAnswer === correctAnswer){
+            input.classList.add("correct");
+            score++;
+        } else {
+            // If wrong or empty, fill the correct answer and show red
+            input.classList.add("wrong");
+            input.value = answers[id];
+        }
+        // Disable input after checking
+        input.disabled = true;
+    });
+
+    document.getElementById("result").innerText = `Score: ${score} / 4. Correct answers filled!`;
+}
+
+function resetQuiz(){
+    Object.keys(answers).forEach(id=>{
+        const input = document.getElementById(id);
+        input.value = "";
+        input.disabled = false;
+        input.classList.remove("correct","wrong");
+    });
+
+    document.getElementById("result").innerText = "Score: 0 / 4";
+}
+
+</script>
+
 </body>
 </html>
