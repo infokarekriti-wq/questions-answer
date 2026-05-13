@@ -109,6 +109,12 @@ font-weight:bold;
 cursor:pointer;
 margin:8px;
 box-shadow:0 4px 10px rgba(0,0,0,0.2);
+transition: transform 0.1s;
+}
+
+.check-btn:active,
+.reset-btn:active{
+transform: scale(0.95);
 }
 
 .check-btn:hover,
@@ -217,62 +223,45 @@ Score: 0 / 4
 <script>
 
 const answers = {
-
-q1:"igloo",
-q2:"germs",
-q3:"canvas",
-q4:"kerala"
-
+    q1:"igloo",
+    q2:"germs",
+    q3:"canvas",
+    q4:"kerala"
 };
 
 function checkAnswers(){
+    let score = 0;
+    Object.keys(answers).forEach(id=>{
+        const input = document.getElementById(id);
+        const userAnswer = input.value.trim().toLowerCase();
+        const correctAnswer = answers[id];
 
-let score = 0;
+        input.classList.remove("correct","wrong");
 
-Object.keys(answers).forEach(id=>{
+        if(userAnswer === correctAnswer){
+            input.classList.add("correct");
+            score++;
+        } else {
+            // If wrong or empty, fill the correct answer and show red
+            input.classList.add("wrong");
+            input.value = answers[id];
+        }
+        // Disable input after checking
+        input.disabled = true;
+    });
 
-const input = document.getElementById(id);
-
-const userAnswer = input.value.trim().toLowerCase();
-
-const correctAnswer = answers[id];
-
-input.classList.remove("correct","wrong");
-
-if(userAnswer === correctAnswer){
-
-input.classList.add("correct");
-
-score++;
-
-}else{
-
-input.classList.add("wrong");
-
-}
-
-});
-
-document.getElementById("result").innerText =
-`Score: ${score} / 4`;
-
+    document.getElementById("result").innerText = `Score: ${score} / 4. Correct answers filled!`;
 }
 
 function resetQuiz(){
+    Object.keys(answers).forEach(id=>{
+        const input = document.getElementById(id);
+        input.value = "";
+        input.disabled = false;
+        input.classList.remove("correct","wrong");
+    });
 
-Object.keys(answers).forEach(id=>{
-
-const input = document.getElementById(id);
-
-input.value = "";
-
-input.classList.remove("correct","wrong");
-
-});
-
-document.getElementById("result").innerText =
-"Score: 0 / 4";
-
+    document.getElementById("result").innerText = "Score: 0 / 4";
 }
 
 </script>
