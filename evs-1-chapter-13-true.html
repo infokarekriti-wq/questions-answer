@@ -9,7 +9,7 @@ body{background:#eef9ff;padding:20px}
 .main{max-width:1100px;margin:auto;background:#fff;padding:30px;border-radius:25px;border:5px solid #00b8f0}
 .top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:30px}
 .heading{font-size:30px;font-weight:bold;color:#00a8e8}
-.badge{background:#00a3b4;color:#fff;padding:8px 18px;border-radius:8px;font-weight:bold}
+
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
 .card{display:flex;flex-direction:column;align-items:center}
 .card img{width:100%;max-width:230px;border:2px solid #ddd}
@@ -36,9 +36,9 @@ button{width:100%}
 
 <div class="top">
 <div class="heading">
-B. Which of these pictures would keep you healthy? Tick the picture.
+ Which of these pictures would keep you healthy? Tick the picture.
 </div>
-<div class="badge">CRITICAL THINKING</div>
+<div class="badge"> </div>
 </div>
 
 <div class="grid">
@@ -112,7 +112,7 @@ incorrect++;
 
 document.getElementById("score").innerText=`Score: ${score} / 2`;
 
-alert(`✅ Correct Answers: ${score}\n❌ Incorrect Answers: ${incorrect}`);
+
 
 }
 
