@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Direction Activity</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#eef9ff;
+padding:20px;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+}
+
+.main{
+width:100%;
+max-width:1000px;
+background:#fff;
+border:4px solid #00b8f0;
+border-radius:25px;
+padding:25px;
+box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+
+.heading{
+font-size:28px;
+font-weight:700;
+color:#00a8e8;
+text-align:center;
+margin-bottom:20px;
+}
+
+/* IMAGE */
+
+.image-box{
+width:100%;
+display:flex;
+justify-content:center;
+}
+
+.image-box img{
+width:100%;
+max-width:800px;
+height:auto;
+display:block;
+}
+
+/* INPUTS */
+
+.inputs{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
+margin-top:25px;
+}
+
+.input-box{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:8px;
+}
+
+.line{
+width:80%;
+height:2px;
+background:#999;
+}
+
+input{
+width:90%;
+border:none;
+border-bottom:2px solid #333;
+padding:8px;
+text-align:center;
+font-size:16px;
+outline:none;
+}
+
+/* BUTTON */
+
+.button-area{
+margin-top:25px;
+text-align:center;
+}
+
+button{
+padding:12px 30px;
+border:none;
+border-radius:30px;
+background:#009688;
+color:#fff;
+font-size:16px;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.heading{
+font-size:20px;
+}
+
+.inputs{
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+}
+
+}
+
+@media(max-width:480px){
+
+.inputs{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="main">
+
+<div class="heading">
+Write the directions
+</div>
+
+<div class="image-box">
+<img src="data:image/png;base64,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">
+</div>
+
+<div class="inputs">
+
+<div class="input-box">
+<input placeholder="Direction">
+</div>
+
+<div class="input-box">
+<input placeholder="Direction">
+</div>
+
+<div class="input-box">
+<input placeholder="Direction">
+</div>
+
+<div class="input-box">
+<input placeholder="Direction">
+</div>
+
+</div>
+
+<div class="button-area">
+<button onclick="check()">Check</button>
+</div>
+
+</div>
+
+<script>
+
+function check(){
+
+alert("Correct answers:\n1. Left\n2. Up\n3. Right\n4. Down");
+
+}
+
+</script>
+
+</body>
+</html>
