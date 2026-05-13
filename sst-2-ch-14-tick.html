@@ -85,15 +85,7 @@ font-weight:700;
 color:#ff2d2d;
 }
 
-.badge{
-background:#ff0000;
-color:#fff;
-padding:8px 18px;
-font-size:18px;
-font-weight:700;
-border-radius:8px;
-animation:pulse 2s infinite;
-}
+
 
 /* HEADING */
 
@@ -418,12 +410,12 @@ padding:13px 16px;
 <div class="main-box">
 
 <div class="top-bar">
-<div class="chapter">Understanding of the chapter</div>
-<div class="badge">Comprehension</div>
+<div class="chapter"> </div>
+<div class="badge"> </div>
 </div>
 
 <div class="heading">
-1. Tick (✓) the correct option.
+ Tick (✓) the correct option.
 </div>
 
 <div id="quiz"></div>
@@ -572,9 +564,7 @@ let incorrect = questions.length - score;
 
 setTimeout(()=>{
 
-alert(
-`✅ Correct Answers: ${score}\n❌ Incorrect Answers: ${incorrect}`
-);
+
 
 },400);
 
