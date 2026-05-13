@@ -52,21 +52,6 @@ font-weight:700;
 color:#00a6e6;
 }
 
-.badge{
-background:#f57c00;
-color:#fff;
-padding:10px 24px;
-font-size:18px;
-font-weight:700;
-clip-path:polygon(
-0 0,
-95% 0,
-100% 50%,
-95% 100%,
-0 100%,
-5% 50%
-);
-}
 
 .match-wrapper{
 position:relative;
@@ -270,11 +255,11 @@ stroke-width:3;
 <div class="top-bar">
 
 <div class="heading">
-B. Match the columns.
+ Match the columns.
 </div>
 
 <div class="badge">
-EVALUATION
+
 </div>
 
 </div>
@@ -475,9 +460,7 @@ let incorrect = 5 - score;
 
 setTimeout(()=>{
 
-alert(
-`✅ Correct Matches: ${score}\n❌ Incorrect Matches: ${incorrect}`
-);
+
 
 },300);
 
