@@ -31,8 +31,6 @@
     .btn-check{background:#3b82f6;color:white;box-shadow:0 4px 6px -1px rgba(0,0,0,.1)}.btn-check:hover{background:#2563eb}
     #results-area{font-size:1.2rem;font-weight:700;display:none;margin-top:.5rem}
     .score-perfect{color:#16a34a}.score-partial{color:#ef4444}
-    #retry-btn{background:none;border:none;color:#3b82f6;text-decoration:underline;cursor:pointer;font-size:.95rem;font-family:inherit;display:none}
-    #retry-btn:hover{color:#1d4ed8}
     @media(max-width:520px){.grid{grid-template-columns:repeat(2,1fr)}.img-card img{height:120px}.header h1{font-size:.88rem}}
   </style>
 </head>
@@ -47,11 +45,10 @@
     <div class="grid" id="grid"></div>
     <div class="controls">
       <div class="btn-row">
-        <button class="btn btn-clear" onclick="clearAll()">Clear All</button>
+        <button class="btn btn-clear" onclick="clearAll()">Try Again</button>
         <button class="btn btn-check" onclick="checkAnswers()">Check Answers</button>
       </div>
       <div id="results-area"></div>
-      <button id="retry-btn" onclick="clearAll()">Try Again</button>
     </div>
   </div>
 </div>
@@ -97,32 +94,56 @@ function clearAll(){
     document.getElementById("tick-"+i.id).textContent="";
   });
   document.getElementById("results-area").style.display="none";
-  document.getElementById("retry-btn").style.display="none";
   document.getElementById("instruction-text").innerText="Click on the pictures that have air in them.";
 }
 
 function checkAnswers(){
   const instrEl=document.getElementById("instruction-text");
-  if(selected.size===0){instrEl.innerHTML='<span style="color:#f97316;font-weight:700;">Please select at least one picture!</span>';return;}
+
+  if(selected.size===0){
+    instrEl.innerHTML='<span style="color:#f97316;font-weight:700;">Please select at least one picture!</span>';
+    return;
+  }
+
   evaluated=true;
+
   let correct=0;
+  let wrong=0;
+  let missed=0;
   const total=items.filter(i=>i.correct).length;
+
   items.forEach(item=>{
     const card=document.getElementById("card-"+item.id);
     const tick=document.getElementById("tick-"+item.id);
     const isSel=selected.has(item.id);
+
     card.classList.remove("selected","wrong","missed");
-    if(isSel&&item.correct){card.classList.add("selected");tick.textContent="✓";correct++;}
-    else if(isSel&&!item.correct){card.classList.add("wrong");tick.textContent="✗";}
-    else if(!isSel&&item.correct){card.classList.add("missed");tick.textContent="?";}
+    tick.textContent="";
+
+    if(isSel && item.correct){
+      card.classList.add("selected");
+      tick.textContent="✓";
+      correct++;
+    }else if(isSel && !item.correct){
+      card.classList.add("wrong");
+      tick.textContent="✗";
+      wrong++;
+    }else if(!isSel && item.correct){
+      card.classList.add("missed");
+      tick.textContent="?";
+      missed++;
+    }
   });
+
   const res=document.getElementById("results-area");
   res.style.display="block";
-  document.getElementById("retry-btn").style.display="inline";
   instrEl.innerText="Green ✓ = correct | Red ✗ = wrong | Yellow ? = missed";
-  res.innerHTML=(correct===total&&selected.size===total)
-    ?`<span class="score-perfect">Perfect! All ${total} correct! 🌟</span>`
-    :`<span class="score-partial">You got ${correct} of ${total} correct. Try again!</span>`;
+
+  if(correct===total && wrong===0 && missed===0){
+    res.innerHTML=`<span class="score-perfect">Perfect! All ${total} correct! 🌟</span>`;
+  }else{
+    res.innerHTML=`<span class="score-partial">Correct: ${correct}/${total} &nbsp; Wrong: ${wrong} &nbsp; Missed: ${missed}</span>`;
+  }
 }
 window.onload=initGame;
 </script>
