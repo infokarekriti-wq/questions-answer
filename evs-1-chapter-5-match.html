@@ -13,11 +13,11 @@
     .diamond.connected{background-color:#0d9488;border-color:#0d9488}
     svg.line-svg line{transition:stroke 0.3s ease;animation:drawLine 0.4s ease-out forwards}
     @keyframes drawLine{from{stroke-dasharray:1000;stroke-dashoffset:1000}to{stroke-dasharray:1000;stroke-dashoffset:0}}
-    .disabled-overlay{position:absolute;inset:0;z-index:30;display:none}
+    .disabled-overlay{position:absolute;inset:0;z-index:30;display:none;pointer-events:none}
     .page{max-width:860px;margin:0 auto;background:white;border-radius:1rem;box-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);overflow:hidden}
     .header{background:white;padding:1.1rem 1.8rem .9rem;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #e5e7eb;flex-wrap:wrap;gap:.5rem}
     .header h1{font-size:1.25rem;font-weight:800;color:#1d4ed8}
-    .badge{background:#f97316;color:white;padding:.28rem 1.1rem;font-size:.78rem;font-weight:700;letter-spacing:.08em;border-radius:3px;white-space:nowrap}
+    
     .instructions{text-align:center;color:#6b7280;padding:.75rem 1rem 0;font-size:.88rem;font-weight:500}
     .game-area{padding:1.2rem 1.5rem 1.5rem;position:relative}
     svg.line-svg{position:absolute;inset:0;pointer-events:none;width:100%;height:100%;z-index:10}
@@ -30,7 +30,7 @@
     .animal-img{height:70px;width:auto;max-width:140px;object-fit:contain;border-radius:.5rem;flex-shrink:0}
     .dot-wrap-r{margin-right:-10px;flex-shrink:0;margin-left:auto;padding-left:4px}
     .dot-wrap-l{margin-left:-10px;flex-shrink:0;padding-right:4px}
-    .controls{margin-top:2rem;text-align:center;border-top:1px solid #f3f4f6;padding-top:1.5rem;display:flex;flex-direction:column;align-items:center;gap:.75rem}
+    .controls{margin-top:2rem;text-align:center;border-top:1px solid #f3f4f6;padding-top:1.5rem;display:flex;flex-direction:column;align-items:center;gap:.75rem;position:relative;z-index:40}
     .btn-row{display:flex;gap:1rem}
     .btn{font-family:inherit;font-size:1rem;font-weight:700;padding:.6rem 1.3rem;border-radius:.5rem;border:none;cursor:pointer;transition:background .15s}
     .btn-clear{background:#e5e7eb;color:#374151}
@@ -40,8 +40,6 @@
     #results-area{font-size:1.35rem;font-weight:700;display:none}
     .score-perfect{color:#16a34a}
     .score-partial{color:#ef4444}
-    #retry-btn{background:none;border:none;color:#3b82f6;text-decoration:underline;cursor:pointer;font-size:.95rem;font-family:inherit;display:none}
-    #retry-btn:hover{color:#1d4ed8}
     @media(max-width:560px){.animal-img{height:52px}.num-label{font-size:.8rem}.col{gap:.5rem}.game-area{padding:.8rem}.header{padding:.85rem 1rem}.header h1{font-size:1rem}}
     @media(max-width:400px){.animal-img{height:42px}}
   </style>
@@ -62,11 +60,11 @@
     </div>
     <div class="controls">
       <div class="btn-row">
-        <button class="btn btn-clear" onclick="clearLines()">Clear All</button>
+        <button class="btn btn-clear" type="button" onclick="tryAgain()">Try Again</button>
         <button class="btn btn-check" onclick="checkAnswers()">Check Answers</button>
       </div>
       <div id="results-area"></div>
-      <button id="retry-btn" onclick="resetGame()">Play Again</button>
+      
     </div>
   </div>
 </div>
@@ -192,11 +190,50 @@ function resetGame(){
   connections={};selectedLeft=null;isEvaluated=false;
   document.getElementById('blocker').style.display='none';
   document.getElementById('results-area').style.display='none';
-  document.getElementById('retry-btn').style.display='none';
+  
   document.getElementById('instruction-text').innerText='Click the diamond next to an image on the left, then click the diamond on the right to connect.';
   updateDots();drawLines();
 }
 window.onload=initGame;
+
+function tryAgain(){
+  // Clear all stored connections
+  if (typeof connections !== "undefined") connections = [];
+  if (typeof selectedDot !== "undefined") selectedDot = null;
+  if (typeof selectedSide !== "undefined") selectedSide = null;
+  if (typeof isChecked !== "undefined") isChecked = false;
+
+  // Remove all SVG lines
+  const svg = document.getElementById("lines-svg");
+  if (svg) svg.innerHTML = "";
+
+  // Hide result
+  const results = document.getElementById("results-area");
+  if (results) {
+    results.style.display = "none";
+    results.textContent = "";
+    results.className = "";
+  }
+
+  // Unlock quiz
+  const blocker = document.getElementById("blocker");
+  if (blocker) blocker.style.display = "none";
+
+  // Reset all diamond dots
+  document.querySelectorAll(".diamond").forEach(dot => {
+    dot.classList.remove("active", "connected", "correct", "wrong");
+    dot.style.backgroundColor = "";
+    dot.style.borderColor = "";
+  });
+
+  // Reset cards
+  document.querySelectorAll(".item-card").forEach(card => {
+    card.classList.remove("correct", "wrong");
+    card.style.borderColor = "";
+    card.style.backgroundColor = "";
+  });
+}
+
 </script>
 </body>
 </html>
