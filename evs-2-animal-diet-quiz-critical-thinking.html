@@ -8,22 +8,41 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        .pop {
-            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+        .pop{
+            animation:popIn 0.3s cubic-bezier(0.175,0.885,0.32,1.275);
         }
 
-        @keyframes popIn {
-            0% {
-                transform: scale(0.5);
-                opacity: 0;
+        @keyframes popIn{
+
+            0%{
+                transform:scale(0.5);
+                opacity:0;
             }
 
-            100% {
-                transform: scale(1);
-                opacity: 1;
+            100%{
+                transform:scale(1);
+                opacity:1;
             }
+
         }
+
+        .animal-image{
+            width:100%;
+            height:140px;
+            object-fit:cover;
+        }
+
+        @media(max-width:768px){
+
+            .animal-image{
+                height:110px;
+            }
+
+        }
+
     </style>
+
 </head>
 
 <body class="bg-teal-50 min-h-screen p-4 md:p-8 font-sans text-gray-800">
@@ -31,33 +50,33 @@
     <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
 
         <!-- Header -->
-        <div
-            class="bg-teal-600 text-white p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-4">
 
-            <div class="flex items-start gap-4">
+        <div class="bg-teal-600 text-white p-6 md:p-8 flex flex-col items-center justify-center">
 
-                <p class="text-lg md:text-xl font-medium leading-relaxed">
-                    Tick (✓) the animals that eat meat and Cross (✗) the animals that eat plants.
-                </p>
-            </div>
+            <p class="text-lg md:text-xl font-medium text-center leading-relaxed">
+                Tick (✓) the animals that eat meat and Cross (✗) the animals that eat plants.
+            </p>
 
-           
         </div>
 
         <!-- Quiz Grid -->
+
         <div class="p-6 md:p-8">
 
-            <!-- IMPORTANT: NO DUPLICATE BOXES -->
             <div id="quiz-grid"
-                class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+                class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             </div>
 
-            <!-- Submit Section -->
+            <!-- Submit -->
+
             <div class="mt-12 text-center border-t border-gray-100 pt-8">
 
-                <button onclick="checkAnswers()"
+                <button
+                    onclick="checkAnswers()"
                     class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-8 rounded-lg shadow-md transition-colors text-lg">
+
                     Check Answers
+
                 </button>
 
                 <div id="results-area"
@@ -67,243 +86,258 @@
             </div>
 
         </div>
+
     </div>
 
-    <script>
-
-        const animals = [
-            {
-                id: 'zebra',
-                name: 'Zebra',
-                imageUrl: 'https://images.unsplash.com/photo-1526095179574-86e545346ae6?auto=format&fit=crop&w=500&q=80',
-                expectedSymbol: '✗'
-            },
-            {
-                id: 'fox',
-                name: 'Fox',
-                imageUrl: 'https://images.unsplash.com/photo-1516934024742-b461fba47600?auto=format&fit=crop&w=500&q=80',
-                expectedSymbol: '✓'
-            },
-            {
-                id: 'tiger',
-                name: 'Tiger',
-                imageUrl: 'https://images.unsplash.com/photo-1549366021-9f761d450615?auto=format&fit=crop&w=500&q=80',
-                expectedSymbol: '✓'
-            },
-            {
-                id: 'lion',
-                name: 'Lion',
-                imageUrl: 'https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?auto=format&fit=crop&w=500&q=80',
-                expectedSymbol: '✓'
-            },
-            {
-                id: 'elephant',
-                name: 'Elephant',
-                imageUrl: 'https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?auto=format&fit=crop&w=500&q=80',
-                expectedSymbol: '✗'
-            },
-            {
-                id: 'deer',
-                name: 'Deer',
-                imageUrl: 'https://images.unsplash.com/photo-1484406566174-9da000fda645?auto=format&fit=crop&w=500&q=80',
-                expectedSymbol: '✗'
-            }
-        ];
+<script>
 
-        let userAnswers = {};
+const animals = [
 
-        function renderQuiz() {
+{
+id:'zebra',
+imageUrl:'https://images.unsplash.com/photo-1526095179574-86e545346ae6?auto=format&fit=crop&w=500&q=80',
+expectedSymbol:'✗'
+},
 
-            const grid = document.getElementById('quiz-grid');
+{
+id:'fox',
+imageUrl:'https://images.unsplash.com/photo-1516934024742-b461fba47600?auto=format&fit=crop&w=500&q=80',
+expectedSymbol:'✓'
+},
 
-            grid.innerHTML = '';
+{
+id:'tiger',
+imageUrl:'https://images.unsplash.com/photo-1549366021-9f761d450615?auto=format&fit=crop&w=500&q=80',
+expectedSymbol:'✓'
+},
 
-            animals.forEach(animal => {
+{
+id:'lion',
+imageUrl:'https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?auto=format&fit=crop&w=500&q=80',
+expectedSymbol:'✓'
+},
 
-                const card = document.createElement('div');
+{
+id:'tiger2',
+imageUrl:'https://images.unsplash.com/photo-1549480017-d76466a4b7e8?auto=format&fit=crop&w=500&q=80',
+expectedSymbol:'✓'
+},
 
-                card.className = "flex flex-col gap-3 group";
+{
+id:'deer',
+imageUrl:'https://images.unsplash.com/photo-1484406566174-9da000fda645?auto=format&fit=crop&w=500&q=80',
+expectedSymbol:'✗'
+}
 
-                card.innerHTML = `
-                
-                    <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-sm border border-gray-200 bg-gray-100">
+];
 
-                        <img 
-                            src="${animal.imageUrl}" 
-                            alt="${animal.name}" 
-                            class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 z-10"
-                        />
+let userAnswers = {};
 
-                        <div 
-                            id="box-${animal.id}" 
-                            class="absolute bottom-3 right-3 w-10 h-10 bg-white border-2 border-gray-400 rounded-md shadow flex items-center justify-center text-2xl font-black text-gray-800 transition-colors z-20">
-                        </div>
+function renderQuiz(){
 
-                    </div>
+const grid = document.getElementById('quiz-grid');
 
-                    <div class="grid grid-cols-2 gap-2 mt-2">
+grid.innerHTML = '';
 
-                        <button
-                            onclick="selectDiet('${animal.id}','meat')"
-                            id="btn-meat-${animal.id}"
-                            class="py-2 text-sm font-bold rounded border-2 border-gray-200 hover:border-green-500 hover:bg-green-50 transition-colors">
+animals.forEach(animal => {
 
-                            <span class="text-green-600 mr-1">✓</span>
-                            Meat
+const card = document.createElement('div');
 
-                        </button>
+card.className =
+"flex flex-col gap-3 bg-white rounded-xl p-3 shadow border border-gray-200";
 
-                        <button
-                            onclick="selectDiet('${animal.id}','plants')"
-                            id="btn-plants-${animal.id}"
-                            class="py-2 text-sm font-bold rounded border-2 border-gray-200 hover:border-red-500 hover:bg-red-50 transition-colors">
+card.innerHTML = `
 
-                            <span class="text-red-500 mr-1">✗</span>
-                            Plants
+<div class="relative rounded-xl overflow-hidden border border-gray-200 bg-gray-100">
 
-                        </button>
+<img
+src="${animal.imageUrl}"
+class="animal-image"
+/>
 
-                    </div>
+<div
+id="box-${animal.id}"
+class="absolute bottom-2 right-2 w-9 h-9 bg-white border-2 border-gray-400 rounded-md shadow flex items-center justify-center text-2xl font-black text-gray-800 transition-colors">
+</div>
 
-                    <div 
-                        id="feedback-${animal.id}" 
-                        class="text-center text-sm font-bold h-5">
-                    </div>
-                `;
+</div>
 
-                grid.appendChild(card);
+<div class="grid grid-cols-2 gap-2">
 
-            });
+<button
+onclick="selectDiet('${animal.id}','meat')"
+id="btn-meat-${animal.id}"
+class="py-2 text-sm font-bold rounded border-2 border-gray-200 hover:border-green-500 hover:bg-green-50 transition-colors">
 
-        }
+<span class="text-green-600 mr-1">✓</span>
+Meat
 
-        function selectDiet(animalId, dietType) {
+</button>
 
-            const symbol = dietType === 'meat' ? '✓' : '✗';
+<button
+onclick="selectDiet('${animal.id}','plants')"
+id="btn-plants-${animal.id}"
+class="py-2 text-sm font-bold rounded border-2 border-gray-200 hover:border-red-500 hover:bg-red-50 transition-colors">
 
-            const symbolColor = dietType === 'meat'
-                ? 'text-green-600'
-                : 'text-red-600';
+<span class="text-red-500 mr-1">✗</span>
+Plants
 
-            userAnswers[animalId] = symbol;
+</button>
 
-            const box = document.getElementById(`box-${animalId}`);
+</div>
 
-            box.innerHTML = `
-                <span class="${symbolColor} pop">
-                    ${symbol}
-                </span>
-            `;
+<div
+id="feedback-${animal.id}"
+class="text-center text-sm font-bold h-5">
+</div>
 
-            document.getElementById(`btn-meat-${animalId}`)
-                .classList.remove('bg-green-100', 'border-green-500');
+`;
 
-            document.getElementById(`btn-plants-${animalId}`)
-                .classList.remove('bg-red-100', 'border-red-500');
+grid.appendChild(card);
 
-            if (dietType === 'meat') {
+});
 
-                document.getElementById(`btn-meat-${animalId}`)
-                    .classList.add('bg-green-100', 'border-green-500');
+}
 
-            } else {
+function selectDiet(animalId,dietType){
 
-                document.getElementById(`btn-plants-${animalId}`)
-                    .classList.add('bg-red-100', 'border-red-500');
+const symbol =
+dietType === 'meat' ? '✓' : '✗';
 
-            }
+const symbolColor =
+dietType === 'meat'
+? 'text-green-600'
+: 'text-red-600';
 
-            document.getElementById(`feedback-${animalId}`).innerHTML = '';
+userAnswers[animalId] = symbol;
 
-        }
+const box =
+document.getElementById(`box-${animalId}`);
 
-        function checkAnswers() {
+box.innerHTML = `
+<span class="${symbolColor} pop">
+${symbol}
+</span>
+`;
 
-            let score = 0;
+document.getElementById(`btn-meat-${animalId}`)
+.classList.remove('bg-green-100','border-green-500');
 
-            let total = animals.length;
+document.getElementById(`btn-plants-${animalId}`)
+.classList.remove('bg-red-100','border-red-500');
 
-            let allAnswered = true;
+if(dietType === 'meat'){
 
-            animals.forEach(animal => {
+document.getElementById(`btn-meat-${animalId}`)
+.classList.add('bg-green-100','border-green-500');
 
-                const feedbackDiv =
-                    document.getElementById(`feedback-${animal.id}`);
+}else{
 
-                const userAnswer = userAnswers[animal.id];
+document.getElementById(`btn-plants-${animalId}`)
+.classList.add('bg-red-100','border-red-500');
 
-                if (!userAnswer) {
+}
 
-                    allAnswered = false;
+document.getElementById(`feedback-${animalId}`)
+.innerHTML = '';
 
-                    feedbackDiv.innerHTML = "Please select an answer";
+}
 
-                    feedbackDiv.className =
-                        "text-center text-sm font-bold h-5 text-orange-500";
+function checkAnswers(){
 
-                    return;
-                }
+let score = 0;
 
-                if (userAnswer === animal.expectedSymbol) {
+let total = animals.length;
 
-                    score++;
+let allAnswered = true;
 
-                    feedbackDiv.innerHTML = "Correct!";
+animals.forEach(animal => {
 
-                    feedbackDiv.className =
-                        "text-center text-sm font-bold h-5 text-green-600";
+const feedbackDiv =
+document.getElementById(`feedback-${animal.id}`);
 
-                } else {
+const userAnswer =
+userAnswers[animal.id];
 
-                    feedbackDiv.innerHTML = "Incorrect";
+if(!userAnswer){
 
-                    feedbackDiv.className =
-                        "text-center text-sm font-bold h-5 text-red-600";
-                }
+allAnswered = false;
 
-            });
+feedbackDiv.innerHTML =
+"Please select an answer";
 
-            const resultsArea = document.getElementById('results-area');
+feedbackDiv.className =
+"text-center text-sm font-bold h-5 text-orange-500";
 
-            resultsArea.classList.remove('hidden');
+return;
 
-            if (!allAnswered) {
+}
 
-                resultsArea.innerHTML = `
-                    <span class="text-orange-500 pop">
-                        Please answer all questions before checking!
-                    </span>
-                `;
+if(userAnswer === animal.expectedSymbol){
 
-            } else {
+score++;
 
-                const percentage = (score / total) * 100;
+feedbackDiv.innerHTML = "Correct!";
 
-                let message =
-                    percentage === 100
-                        ? "Perfect! 🎉"
-                        : "Good try! 💡";
+feedbackDiv.className =
+"text-center text-sm font-bold h-5 text-green-600";
 
-                let colorClass =
-                    percentage === 100
-                        ? "text-green-600"
-                        : "text-teal-600";
+}else{
 
-                resultsArea.innerHTML = `
-                    <div class="${colorClass} pop">
-                        You scored ${score} out of ${total}
-                        <br>
-                        <span class="text-lg font-medium">
-                            ${message}
-                        </span>
-                    </div>
-                `;
-            }
-        }
+feedbackDiv.innerHTML = "Incorrect";
 
-        renderQuiz();
+feedbackDiv.className =
+"text-center text-sm font-bold h-5 text-red-600";
 
-    </script>
+}
+
+});
+
+const resultsArea =
+document.getElementById('results-area');
+
+resultsArea.classList.remove('hidden');
+
+if(!allAnswered){
+
+resultsArea.innerHTML = `
+<span class="text-orange-500 pop">
+Please answer all questions before checking!
+</span>
+`;
+
+}else{
+
+const percentage =
+(score / total) * 100;
+
+let message =
+percentage === 100
+? "Perfect! 🎉"
+: "Good try! 💡";
+
+let colorClass =
+percentage === 100
+? "text-green-600"
+: "text-teal-600";
+
+resultsArea.innerHTML = `
+<div class="${colorClass} pop">
+You scored ${score} out of ${total}
+<br>
+<span class="text-lg font-medium">
+${message}
+</span>
+</div>
+`;
+
+}
+
+}
+
+renderQuiz();
+
+</script>
 
 </body>
 </html>
