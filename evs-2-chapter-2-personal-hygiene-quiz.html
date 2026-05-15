@@ -152,8 +152,7 @@
 <body>
   <div class="quiz-box">
     <div class="header">
-      <div class="badge">DECISION MAKING</div>
-      <h1>Personal Hygiene</h1>
+   
       <p>Tick (✓) the correct option.</p>
     </div>
 
@@ -240,11 +239,7 @@
       answered++;
       document.getElementById("result").innerText = `Score: ${score} / ${questions.length}`;
 
-      if (answered === questions.length) {
-        setTimeout(() => {
-          alert(`Great Job! Your final score is ${score} out of ${questions.length}`);
-        }, 300);
-      }
+     
     }
 
     function resetQuiz() {
