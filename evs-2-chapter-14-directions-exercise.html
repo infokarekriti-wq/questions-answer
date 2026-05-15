@@ -186,8 +186,6 @@ padding:10px 16px;
 
 <div class="heading">
 
-<h1>Directions Exercise</h1>
-
 <p>Use the help box to fill in the blanks.</p>
 
 </div>
@@ -298,13 +296,6 @@ let wrong = Object.keys(answers).length - score;
 document.getElementById("result").innerText =
 `Score: ${score} / 5`;
 
-setTimeout(()=>{
-
-alert(
-`✅ Correct Answers: ${score}\n❌ Wrong Answers: ${wrong}`
-);
-
-},300);
 
 }
 
