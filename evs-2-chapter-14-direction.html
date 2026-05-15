@@ -44,8 +44,6 @@ text-align:center;
 margin-bottom:20px;
 }
 
-/* IMAGE */
-
 .image-box{
 width:100%;
 display:flex;
@@ -58,8 +56,6 @@ max-width:800px;
 height:auto;
 display:block;
 }
-
-/* INPUTS */
 
 .inputs{
 display:grid;
@@ -75,12 +71,6 @@ align-items:center;
 gap:8px;
 }
 
-.line{
-width:80%;
-height:2px;
-background:#999;
-}
-
 input{
 width:90%;
 border:none;
@@ -89,20 +79,28 @@ padding:8px;
 text-align:center;
 font-size:16px;
 outline:none;
+background:transparent;
 }
 
-/* BUTTON */
+.correct-text{
+color:green;
+font-size:14px;
+margin-top:5px;
+font-weight:600;
+}
 
 .button-area{
 margin-top:25px;
-text-align:center;
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
 }
 
 button{
 padding:12px 30px;
 border:none;
 border-radius:30px;
-background:#009688;
 color:#fff;
 font-size:16px;
 font-weight:600;
@@ -110,16 +108,30 @@ cursor:pointer;
 transition:0.3s;
 }
 
+.check-btn{
+background:#009688;
+}
+
+.try-btn{
+background:#ff9800;
+}
+
 button:hover{
 transform:scale(1.05);
 }
 
-/* MOBILE */
+#result{
+margin-top:20px;
+text-align:center;
+font-size:20px;
+font-weight:700;
+color:#333;
+}
 
 @media(max-width:768px){
 
 .heading{
-font-size:20px;
+font-size:22px;
 }
 
 .inputs{
@@ -135,6 +147,10 @@ gap:15px;
 grid-template-columns:1fr;
 }
 
+button{
+width:100%;
+}
+
 }
 
 </style>
@@ -145,7 +161,7 @@ grid-template-columns:1fr;
 <div class="main">
 
 <div class="heading">
-Write the directions
+Write the Directions
 </div>
 
 <div class="image-box">
@@ -155,26 +171,29 @@ Write the directions
 <div class="inputs">
 
 <div class="input-box">
-<input placeholder="Direction">
+<input type="text" placeholder="Direction">
 </div>
 
 <div class="input-box">
-<input placeholder="Direction">
+<input type="text" placeholder="Direction">
 </div>
 
 <div class="input-box">
-<input placeholder="Direction">
+<input type="text" placeholder="Direction">
 </div>
 
 <div class="input-box">
-<input placeholder="Direction">
+<input type="text" placeholder="Direction">
 </div>
 
 </div>
 
 <div class="button-area">
-<button onclick="check()">Check</button>
+<button class="check-btn" onclick="checkAnswers()">Check Answer</button>
+<button class="try-btn" onclick="tryAgain()">Try Again</button>
 </div>
+
+<div id="result"></div>
 
 </div>
 
@@ -182,46 +201,60 @@ Write the directions
 
 const answers = ["left","up","right","down"];
 
-function check(){
+function checkAnswers(){
 
 let inputs = document.querySelectorAll(".input-box input");
 let score = 0;
 
-// remove old answers
 document.querySelectorAll(".correct-text").forEach(e => e.remove());
 
 inputs.forEach((input,index)=>{
 
-let user = input.value.trim().toLowerCase();
-let correct = answers[index];
+let userAnswer = input.value.trim().toLowerCase();
+let correctAnswer = answers[index];
 
-// reset style
 input.style.borderBottom = "2px solid #333";
 
-if(user === correct){
+if(userAnswer === correctAnswer){
+
 input.style.borderBottom = "3px solid green";
 score++;
+
 }else{
+
 input.style.borderBottom = "3px solid red";
 
-// ✅ show correct answer
-let ans = document.createElement("div");
-ans.className = "correct-text";
-ans.style.color = "green";
-ans.style.fontSize = "14px";
-ans.style.marginTop = "5px";
-ans.innerHTML = "✔ Correct: <b>" + correct + "</b>";
+let answerText = document.createElement("div");
+answerText.className = "correct-text";
+answerText.innerHTML = "✔ Correct: <b>" + correctAnswer + "</b>";
 
-input.parentNode.appendChild(ans);
+input.parentNode.appendChild(answerText);
+
 }
 
 });
 
 let wrong = inputs.length - score;
 
-// ✅ show result on page
-document.getElementById("result").innerText =
-`✅ Correct: ${score} / 4   |   ❌ Wrong: ${wrong}`;
+document.getElementById("result").innerHTML =
+"✅ Correct: " + score + " / 4 &nbsp;&nbsp;&nbsp; ❌ Wrong: " + wrong;
+
+}
+
+function tryAgain(){
+
+let inputs = document.querySelectorAll(".input-box input");
+
+inputs.forEach((input)=>{
+
+input.value = "";
+input.style.borderBottom = "2px solid #333";
+
+});
+
+document.querySelectorAll(".correct-text").forEach(e => e.remove());
+
+document.getElementById("result").innerHTML = "";
 
 }
 
