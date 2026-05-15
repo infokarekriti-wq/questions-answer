@@ -180,9 +180,48 @@ Write the directions
 
 <script>
 
+const answers = ["left","up","right","down"];
+
 function check(){
 
-alert("Correct answers:\n1. Left\n2. Up\n3. Right\n4. Down");
+let inputs = document.querySelectorAll(".input-box input");
+let score = 0;
+
+// remove old answers
+document.querySelectorAll(".correct-text").forEach(e => e.remove());
+
+inputs.forEach((input,index)=>{
+
+let user = input.value.trim().toLowerCase();
+let correct = answers[index];
+
+// reset style
+input.style.borderBottom = "2px solid #333";
+
+if(user === correct){
+input.style.borderBottom = "3px solid green";
+score++;
+}else{
+input.style.borderBottom = "3px solid red";
+
+// ✅ show correct answer
+let ans = document.createElement("div");
+ans.className = "correct-text";
+ans.style.color = "green";
+ans.style.fontSize = "14px";
+ans.style.marginTop = "5px";
+ans.innerHTML = "✔ Correct: <b>" + correct + "</b>";
+
+input.parentNode.appendChild(ans);
+}
+
+});
+
+let wrong = inputs.length - score;
+
+// ✅ show result on page
+document.getElementById("result").innerText =
+`✅ Correct: ${score} / 4   |   ❌ Wrong: ${wrong}`;
 
 }
 
