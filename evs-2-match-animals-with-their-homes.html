@@ -6,165 +6,198 @@
 <title>Match the Animals with their Homes</title>
 
 <style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, sans-serif;
+}
+
 body{
-  margin:0;
-  padding:20px;
-  background:#eff6ff;
-  font-family:Arial, sans-serif;
-  color:#333;
+background:#eff6ff;
+padding:15px;
 }
 
+/* CONTAINER */
 .container{
-  max-width:1000px;
-  margin:auto;
-  background:white;
-  border-radius:20px;
-  overflow:hidden;
-  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+max-width:1000px;
+width:100%;
+margin:auto;
+background:#fff;
+border-radius:20px;
+overflow:hidden;
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
 }
 
+/* HEADER */
 .header{
-  background:#3b82f6;
-  color:white;
-  padding:25px;
-  text-align:center;
+background:#3b82f6;
+color:#fff;
+padding:20px;
+text-align:center;
 }
 
 .header h1{
-  margin:0;
-  font-size:30px;
+font-size:clamp(20px,4vw,30px);
 }
 
+/* INSTRUCTION */
 .instruction{
-  text-align:center;
-  color:#555;
-  font-weight:bold;
-  margin:20px;
+text-align:center;
+color:#555;
+font-weight:bold;
+margin:15px;
+font-size:14px;
 }
 
+/* GAME AREA */
 .game-area{
-  position:relative;
-  padding:25px;
+position:relative;
+padding:15px;
 }
 
+/* FLEX */
 .match-container{
-  display:flex;
-  justify-content:space-between;
-  position:relative;
+display:flex;
+gap:20px;
 }
 
+/* COLUMN */
 .column{
-  width:40%;
-  display:flex;
-  flex-direction:column;
-  gap:22px;
+flex:1;
+display:flex;
+flex-direction:column;
+gap:18px;
 }
 
+/* CARD */
 .card{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  border:2px solid #ddd;
-  border-radius:18px;
-  padding:8px;
-  background:white;
-  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+display:flex;
+align-items:center;
+justify-content:space-between;
+border:2px solid #ddd;
+border-radius:15px;
+padding:10px;
+background:#fff;
+box-shadow:0 2px 8px rgba(0,0,0,0.08);
 }
 
 .card img{
-  width:75px;
-  height:75px;
-  object-fit:cover;
-  border-radius:12px;
+width:65px;
+height:65px;
+object-fit:cover;
+border-radius:10px;
 }
 
 .card span{
-  flex:1;
-  text-align:center;
-  font-size:18px;
-  font-weight:bold;
+flex:1;
+text-align:center;
+font-size:16px;
+font-weight:bold;
 }
 
+/* DOT */
 .diamond{
-  width:16px;
-  height:16px;
-  background:white;
-  border:2px solid #ef4444;
-  transform:rotate(45deg);
-  cursor:pointer;
-  z-index:20;
+width:18px;
+height:18px;
+background:#fff;
+border:2px solid #ef4444;
+transform:rotate(45deg);
+cursor:pointer;
 }
 
 .diamond.active{
-  background:#ef4444;
+background:#ef4444;
 }
 
 .diamond.connected{
-  background:#0d9488;
-  border-color:#0d9488;
+background:#0d9488;
+border-color:#0d9488;
 }
 
+/* SVG */
 svg{
   position:absolute;
-  inset:0;
+  top:0;
+  left:0;
   width:100%;
   height:100%;
   pointer-events:none;
-  z-index:10;
+  overflow:visible;   /* 🔥 important */
+  z-index:5;
 }
 
+/* BUTTONS */
 .controls{
-  text-align:center;
-  margin-top:35px;
-  border-top:1px solid #eee;
-  padding-top:25px;
+text-align:center;
+margin-top:25px;
+border-top:1px solid #eee;
+padding-top:20px;
 }
 
 button{
-  border:none;
-  padding:12px 25px;
-  margin:8px;
-  border-radius:10px;
-  font-size:18px;
-  font-weight:bold;
-  cursor:pointer;
+border:none;
+padding:10px 20px;
+margin:5px;
+border-radius:10px;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
 }
 
 .clear-btn{
-  background:#e5e7eb;
-  color:#333;
+background:#e5e7eb;
 }
 
 .check-btn{
-  background:#3b82f6;
-  color:white;
+background:#3b82f6;
+color:#fff;
 }
 
 #results-area{
-  margin-top:18px;
-  font-size:24px;
-  font-weight:bold;
+margin-top:15px;
+font-size:18px;
+font-weight:bold;
 }
 
-@media(max-width:700px){
+/* MOBILE */
+@media(max-width:768px){
+
   .match-container{
-    flex-direction:column;
-    gap:25px;
+   
+    gap:40px;   /* 🔥 more space for lines */
   }
 
-  .column{
-    width:100%;
+  .game-area{
+    padding:25px 10px;
   }
 
-  .card img{
-    width:60px;
-    height:60px;
-  }
-
-  .card span{
-    font-size:15px;
-  }
 }
+
+.card img{
+width:55px;
+height:55px;
+}
+
+.card span{
+font-size:14px;
+}
+
+button{
+width:100%;
+}
+
+}
+
+@media(max-width:480px){
+
+.card span{
+font-size:13px;
+}
+
+}
+
 </style>
 </head>
 
@@ -172,261 +205,190 @@ button{
 
 <div class="container">
 
-  <div class="header">
-    <h1>Match the animals with their homes.</h1>
-  </div>
+<div class="header">
+<h1>Match the animals with their homes.</h1>
+</div>
 
-  <p class="instruction" id="instruction-text">
-    
-  </p>
+<p class="instruction" id="instruction-text"></p>
 
-  <div class="game-area">
+<div class="game-area">
 
-    <svg id="lines-svg"></svg>
+<svg id="lines-svg"></svg>
 
-    <div class="match-container">
+<div class="match-container">
 
-      <div class="column" id="animals-column"></div>
+<div class="column" id="animals-column"></div>
+<div class="column" id="homes-column"></div>
 
-      <div class="column" id="homes-column"></div>
+</div>
 
-    </div>
+<div class="controls">
+<button class="clear-btn" onclick="clearLines()">Clear All</button>
+<button class="check-btn" onclick="checkAnswers()">Check Answers</button>
+<div id="results-area"></div>
+</div>
 
-    <div class="controls">
-      <button class="clear-btn" onclick="clearLines()">Clear All</button>
-      <button class="check-btn" onclick="checkAnswers()">Check Answers</button>
-
-      <div id="results-area"></div>
-    </div>
-
-  </div>
+</div>
 
 </div>
 
 <script>
+
 const animals = [
-  {
-    id:'bird',
-    name:'Bird',
-    img:'https://upload.wikimedia.org/wikipedia/commons/9/97/Swallow-tailed_bee-eater_%28Merops_hirundineus_chrysolaimus%29.jpg',
-    correctHome:'nest'
-  },
-  {
-    id:'snake',
-    name:'Snake',
-    img:'https://upload.wikimedia.org/wikipedia/commons/9/93/Coral_red_kukri_%28Oligodon_kheriensis%29_from_Cooch_Behar%2C_West_Bengal%2C_India.jpg',
-    correctHome:'burrow'
-  },
-  {
-    id:'horse',
-    name:'Horse',
-    img:'https://upload.wikimedia.org/wikipedia/commons/d/de/Nokota_Horses_cropped.jpg',
-    correctHome:'barn'
-  },
-  {
-    id:'dog',
-    name:'Dog',
-    img:'https://upload.wikimedia.org/wikipedia/commons/2/26/YellowLabradorLooking_new.jpg',
-    correctHome:'doghouse'
-  },
-  {
-    id:'lion',
-    name:'Lion',
-    img:'https://upload.wikimedia.org/wikipedia/commons/7/73/Lion_waiting_in_Namibia.jpg',
-    correctHome:'cave'
-  }
+{ id:'bird', name:'Bird', img:'https://upload.wikimedia.org/wikipedia/commons/9/97/Swallow-tailed_bee-eater_%28Merops_hirundineus_chrysolaimus%29.jpg', correctHome:'nest'},
+{ id:'snake', name:'Snake', img:'https://upload.wikimedia.org/wikipedia/commons/9/93/Coral_red_kukri_%28Oligodon_kheriensis%29_from_Cooch_Behar%2C_West_Bengal%2C_India.jpg', correctHome:'burrow'},
+{ id:'horse', name:'Horse', img:'https://upload.wikimedia.org/wikipedia/commons/d/de/Nokota_Horses_cropped.jpg', correctHome:'barn'},
+{ id:'dog', name:'Dog', img:'https://upload.wikimedia.org/wikipedia/commons/2/26/YellowLabradorLooking_new.jpg', correctHome:'doghouse'},
+{ id:'lion', name:'Lion', img:'https://upload.wikimedia.org/wikipedia/commons/7/73/Lion_waiting_in_Namibia.jpg', correctHome:'cave'}
 ];
 
 const homes = [
-  {
-    id:'doghouse',
-    name:'Doghouse',
-    img:'https://upload.wikimedia.org/wikipedia/commons/e/e5/Red_wooden_doghouse_in_Tuntorp_1.jpg'
-  },
-  {
-    id:'cave',
-    name:'Cave',
-    img:'https://upload.wikimedia.org/wikipedia/commons/8/87/The_lower_Cave_on_Cave_Hill_-_geograph.org.uk_-_548361.jpg'
-  },
-  {
-    id:'nest',
-    name:'Nest',
-    img:'https://upload.wikimedia.org/wikipedia/commons/9/92/Bocianie_gniazdo_w_Podolu%2C_%C5%9Awi%C4%99tokrzyskie%2C_20240629_1230_0067.jpg'
-  },
-  {
-    id:'burrow',
-    name:'Burrow',
-    img:'https://upload.wikimedia.org/wikipedia/commons/c/cc/Rabbit_burrow_hole_in_Parco_Alto_Milanese_-_Legnano%2C_Lombardy%2C_Italy_2020-12-11.jpg'
-  },
-  {
-    id:'barn',
-    name:'Barn',
-    img:'https://upload.wikimedia.org/wikipedia/commons/a/a8/Log_barn_WF4_6908.jpg'
-  }
+{ id:'doghouse', name:'Doghouse', img:'https://upload.wikimedia.org/wikipedia/commons/e/e5/Red_wooden_doghouse_in_Tuntorp_1.jpg'},
+{ id:'cave', name:'Cave', img:'https://upload.wikimedia.org/wikipedia/commons/8/87/The_lower_Cave_on_Cave_Hill_-_geograph.org.uk_-_548361.jpg'},
+{ id:'nest', name:'Nest', img:'https://upload.wikimedia.org/wikipedia/commons/9/92/Bocianie_gniazdo_w_Podolu%2C_%C5%9Awi%C4%99tokrzyskie%2C_20240629_1230_0067.jpg'},
+{ id:'burrow', name:'Burrow', img:'https://upload.wikimedia.org/wikipedia/commons/c/cc/Rabbit_burrow_hole_in_Parco_Alto_Milanese_-_Legnano%2C_Lombardy%2C_Italy_2020-12-11.jpg'},
+{ id:'barn', name:'Barn', img:'https://upload.wikimedia.org/wikipedia/commons/a/a8/Log_barn_WF4_6908.jpg'}
 ];
 
-let selectedAnimal = null;
-let connections = {};
-let isChecked = false;
+let selectedAnimal=null;
+let connections={};
+let isChecked=false;
 
 function initGame(){
-  const animalsCol = document.getElementById("animals-column");
-  const homesCol = document.getElementById("homes-column");
+const a=document.getElementById("animals-column");
+const h=document.getElementById("homes-column");
+a.innerHTML="";
+h.innerHTML="";
 
-  animalsCol.innerHTML = "";
-  homesCol.innerHTML = "";
+animals.forEach(x=>{
+a.innerHTML+=`<div class="card">
+<img src="${x.img}">
+<span>${x.name}</span>
+<div class="diamond" id="dot-${x.id}" onclick="selectAnimal('${x.id}')"></div>
+</div>`;
+});
 
-  animals.forEach(animal=>{
-    animalsCol.innerHTML += `
-      <div class="card">
-        <img src="${animal.img}" alt="${animal.name}">
-        <span>${animal.name}</span>
-        <div class="diamond" id="dot-${animal.id}" onclick="selectAnimal('${animal.id}')"></div>
-      </div>
-    `;
-  });
-
-  homes.forEach(home=>{
-    homesCol.innerHTML += `
-      <div class="card">
-        <div class="diamond" id="dot-${home.id}" onclick="selectHome('${home.id}')"></div>
-        <span>${home.name}</span>
-        <img src="${home.img}" alt="${home.name}">
-      </div>
-    `;
-  });
+homes.forEach(x=>{
+h.innerHTML+=`<div class="card">
+<div class="diamond" id="dot-${x.id}" onclick="selectHome('${x.id}')"></div>
+<span>${x.name}</span>
+<img src="${x.img}">
+</div>`;
+});
 }
 
 function selectAnimal(id){
-  if(isChecked) return;
-
-  selectedAnimal = id;
-  updateDots();
+if(isChecked) return;
+selectedAnimal=id;
+updateDots();
 }
 
-function selectHome(homeId){
-  if(isChecked || !selectedAnimal) return;
+function selectHome(id){
+if(isChecked||!selectedAnimal) return;
 
-  for(let animalId in connections){
-    if(connections[animalId] === homeId){
-      delete connections[animalId];
-    }
-  }
+for(let k in connections){
+if(connections[k]===id) delete connections[k];
+}
 
-  connections[selectedAnimal] = homeId;
-  selectedAnimal = null;
+connections[selectedAnimal]=id;
+selectedAnimal=null;
 
-  updateDots();
-  drawLines();
+updateDots();
+drawLines();
 }
 
 function updateDots(){
-  document.querySelectorAll(".diamond").forEach(dot=>{
-    dot.classList.remove("active","connected");
-  });
+document.querySelectorAll(".diamond").forEach(d=>{
+d.classList.remove("active","connected");
+});
 
-  if(selectedAnimal){
-    document.getElementById("dot-" + selectedAnimal).classList.add("active");
-  }
-
-  for(let animalId in connections){
-    document.getElementById("dot-" + animalId).classList.add("connected");
-    document.getElementById("dot-" + connections[animalId]).classList.add("connected");
-  }
+if(selectedAnimal){
+document.getElementById("dot-"+selectedAnimal).classList.add("active");
 }
 
-function drawLines(colors = null){
-  const svg = document.getElementById("lines-svg");
-  const svgRect = svg.getBoundingClientRect();
+for(let k in connections){
+document.getElementById("dot-"+k).classList.add("connected");
+document.getElementById("dot-"+connections[k]).classList.add("connected");
+}
+}
 
-  svg.innerHTML = "";
+function drawLines(colors=null){
+const svg=document.getElementById("lines-svg");
+const rect=svg.getBoundingClientRect();
+svg.innerHTML="";
 
-  for(let animalId in connections){
-    const homeId = connections[animalId];
+for(let k in connections){
+const d1=document.getElementById("dot-"+k);
+const d2=document.getElementById("dot-"+connections[k]);
 
-    const dot1 = document.getElementById("dot-" + animalId);
-    const dot2 = document.getElementById("dot-" + homeId);
+const r1=d1.getBoundingClientRect();
+const r2=d2.getBoundingClientRect();
 
-    const rect1 = dot1.getBoundingClientRect();
-    const rect2 = dot2.getBoundingClientRect();
+const x1=r1.left+r1.width/2-rect.left;
+const y1=r1.top+r1.height/2-rect.top;
+const x2=r2.left+r2.width/2-rect.left;
+const y2=r2.top+r2.height/2-rect.top;
 
-    const x1 = rect1.left + rect1.width / 2 - svgRect.left;
-    const y1 = rect1.top + rect1.height / 2 - svgRect.top;
-    const x2 = rect2.left + rect2.width / 2 - svgRect.left;
-    const y2 = rect2.top + rect2.height / 2 - svgRect.top;
+let color="#0d9488";
+if(colors && colors[k]){
+color = colors[k]==="correct" ? "#22c55e" : "#ef4444";
+}
 
-    let lineColor = "#0d9488";
+const line=document.createElementNS("http://www.w3.org/2000/svg","line");
+line.setAttribute("x1",x1);
+line.setAttribute("y1",y1);
+line.setAttribute("x2",x2);
+line.setAttribute("y2",y2);
+line.setAttribute("stroke",color);
+line.setAttribute("stroke-width","4");
+line.setAttribute("stroke-linecap","round");
 
-    if(colors && colors[animalId]){
-      lineColor = colors[animalId] === "correct" ? "#22c55e" : "#ef4444";
-    }
-
-    const line = document.createElementNS("http://www.w3.org/2000/svg","line");
-
-    line.setAttribute("x1",x1);
-    line.setAttribute("y1",y1);
-    line.setAttribute("x2",x2);
-    line.setAttribute("y2",y2);
-    line.setAttribute("stroke",lineColor);
-    line.setAttribute("stroke-width","4");
-    line.setAttribute("stroke-linecap","round");
-
-    svg.appendChild(line);
-  }
+svg.appendChild(line);
+}
 }
 
 function clearLines(){
-  connections = {};
-  selectedAnimal = null;
-  isChecked = false;
-
-  document.getElementById("results-area").innerHTML = "";
-  document.getElementById("instruction-text").innerText =
-    " ";
-
-  updateDots();
-  drawLines();
+connections={};
+selectedAnimal=null;
+isChecked=false;
+document.getElementById("results-area").innerHTML="";
+updateDots();
+drawLines();
 }
 
 function checkAnswers(){
-  const resultsArea = document.getElementById("results-area");
-  const instructionText = document.getElementById("instruction-text");
 
-  if(Object.keys(connections).length < animals.length){
-    instructionText.innerHTML =
-      '<span style="color:#f97316;">Please connect all animals to their homes before checking!</span>';
-    return;
-  }
-
-  isChecked = true;
-
-  let score = 0;
-  let colors = {};
-
-  animals.forEach(animal=>{
-    if(connections[animal.id] === animal.correctHome){
-      score++;
-      colors[animal.id] = "correct";
-    }else{
-      colors[animal.id] = "incorrect";
-    }
-  });
-
-  drawLines(colors);
-
-  instructionText.innerText = "Here are your results!";
-
-  if(score === animals.length){
-    resultsArea.innerHTML =
-      `<span style="color:#16a34a;">Perfect Score! ${score}/${animals.length}</span>`;
-  }else{
-    resultsArea.innerHTML =
-      `<span style="color:#ef4444;">You scored ${score} out of ${animals.length}</span>`;
-  }
+if(Object.keys(connections).length < animals.length){
+document.getElementById("instruction-text").innerHTML =
+'<span style="color:#f97316;">Connect all first!</span>';
+return;
 }
 
-window.onload = initGame;
+isChecked=true;
+
+let score=0;
+let colors={};
+
+animals.forEach(a=>{
+if(connections[a.id]===a.correctHome){
+score++;
+colors[a.id]="correct";
+}else{
+colors[a.id]="incorrect";
+}
+});
+
+drawLines(colors);
+
+document.getElementById("results-area").innerHTML =
+score===animals.length
+? `<span style="color:green;">Perfect! ${score}/${animals.length}</span>`
+: `<span style="color:red;">Score: ${score}/${animals.length}</span>`;
+}
+
+window.onload=initGame;
 window.addEventListener("resize",()=>drawLines());
+
 </script>
 
 </body>
