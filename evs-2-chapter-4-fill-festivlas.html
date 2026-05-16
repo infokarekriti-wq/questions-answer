@@ -103,6 +103,14 @@ margin-left:auto;
 margin-right:auto;
 }
 
+
+.btn-wrap{
+display:flex;
+justify-content:center;
+gap:12px;
+flex-wrap:wrap;
+}
+
 /* RESULT TEXT */
 #resultBox{
 margin-top:15px;
@@ -165,7 +173,10 @@ Look at the pictures and write the name of the festival associated with them.
 Christmas | Ganesh Chaturthi | Janmashtami | Makar Sankranti | Raksha Bandhan | Gurpurab
 </div>
 
+<div class="btn-wrap">
 <button onclick="check()">Check Answers</button>
+<button onclick="resetQuiz()">Reset Quiz</button>
+</div>
 
 <div id="resultBox"></div>
 
@@ -207,6 +218,15 @@ incorrect++;
 document.getElementById("resultBox").innerHTML =
 `✅ Correct: ${correct} | ❌ Incorrect: ${incorrect}`;
 
+}
+
+function resetQuiz(){
+const inputs=document.querySelectorAll(".input");
+inputs.forEach(inp=>{
+inp.value="";
+inp.classList.remove("correct","wrong");
+});
+document.getElementById("resultBox").innerHTML="";
 }
 
 </script>
