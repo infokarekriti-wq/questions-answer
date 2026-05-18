@@ -232,14 +232,16 @@ input.classList.add("wrong");
 
 });
 
+if(score > 4){
+score = 4;
+}
+
 document.getElementById("result").innerText =
 `Score: ${score} / 4`;
 
 let incorrect = 4 - score;
 
 setTimeout(()=>{
-
-
 
 },300);
 
