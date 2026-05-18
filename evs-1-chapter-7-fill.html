@@ -51,8 +51,6 @@ font-weight:700;
 color:#00aeea;
 }
 
-
-
 .exercise-grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
@@ -199,10 +197,6 @@ width:100%;
  Write the names of these fruits and vegetables.
 </div>
 
-<div class="badge">
-
-</div>
-
 </div>
 
 <div class="exercise-grid">
@@ -312,7 +306,7 @@ Reset
 </div>
 
 <div class="result" id="result">
-Score: 0 / 13
+Score: 0 / 6
 </div>
 
 </div>
@@ -342,11 +336,24 @@ pa2:'Y'
 
 };
 
+const groups = {
+tomato:['t1','t2'],
+banana:['b1','b2'],
+cauliflower:['c1','c2','c3'],
+potato:['p1','p2'],
+onion:['o1','o2'],
+papaya:['pa1','pa2']
+};
+
 function checkAnswers(){
 
 let score = 0;
 
-for(let id in answers){
+for(let group in groups){
+
+let allCorrect = true;
+
+groups[group].forEach(id=>{
 
 const input = document.getElementById(id);
 
@@ -358,18 +365,23 @@ if(value === answers[id]){
 
 input.classList.add("correct");
 
-score++;
-
 }else{
 
 input.classList.add("wrong");
+allCorrect = false;
 
+}
+
+});
+
+if(allCorrect){
+score++;
 }
 
 }
 
 document.getElementById("result").innerText =
-`Score: ${score} / 13`;
+`Score: ${score} / 6`;
 
 }
 
@@ -386,7 +398,7 @@ input.classList.remove("correct","wrong");
 }
 
 document.getElementById("result").innerText =
-"Score: 0 / 13";
+"Score: 0 / 6";
 
 }
 
