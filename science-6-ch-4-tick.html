@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>MCQ Exercise</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#e8f9ff,#ffffff,#eefdf5);
+padding:20px;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+overflow-x:hidden;
+}
+
+/* MAIN BOX */
+
+.main-box{
+width:100%;
+max-width:1100px;
+background:#fff;
+border-radius:35px;
+padding:15px;
+border:5px solid #00b7ff;
+box-shadow:
+0 20px 40px rgba(0,0,0,0.08),
+0 10px 20px rgba(0,183,255,0.15);
+}
+
+/* TOP BAR */
+
+.heading{
+font-size:36px;
+font-weight:800;
+color:#00aeea;
+margin-bottom:25px;
+}
+
+/* QUESTION BOX */
+
+.question-box{
+background:#f9fcff;
+border:2px solid #d7f0ff;
+border-radius:24px;
+padding:24px;
+margin-bottom:24px;
+}
+
+.question{
+font-size:22px;
+font-weight:600;
+margin-bottom:15px;
+}
+
+/* OPTIONS */
+
+.options{
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+.option-btn{
+background:#fff;
+border:2px solid #ff5ca8;
+border-radius:15px;
+padding:12px 15px;
+font-size:18px;
+cursor:pointer;
+text-align:left;
+transition:0.3s;
+}
+
+.option-btn:hover{
+background:#fff0f7;
+}
+
+.option-btn.correct{
+background:#e7f8ea;
+border-color:#2e7d32;
+}
+
+.option-btn.wrong{
+background:#ffebee;
+border-color:#c62828;
+}
+
+/* SCORE */
+
+.score{
+text-align:center;
+font-size:28px;
+font-weight:700;
+margin-top:20px;
+}
+
+/* BUTTON */
+
+.reset-btn{
+margin-top:20px;
+display:block;
+margin-left:auto;
+margin-right:auto;
+padding:10px 30px;
+border:none;
+background:#ff9800;
+color:#fff;
+border-radius:30px;
+cursor:pointer;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.heading{font-size:22px;}
+.question{font-size:16px;}
+.option-btn{font-size:14px;}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="main-box">
+
+<div class="heading">Tick (✓) the correct option.</div>
+
+<div id="quiz"></div>
+
+<div class="score" id="score">Score: 0 / 6</div>
+
+<button class="reset-btn" onclick="resetQuiz()">Reset</button>
+
+</div>
+
+<script>
+
+const questions = [
+
+{
+question:'a. A magnet loses its property when–',
+options:[
+'i. Heated',
+'ii. Beaten',
+'iii. Hammered',
+'iv. All of these'
+],
+answer:'iv. All of these'
+},
+
+{
+question:'b. The first magnet was discovered in–',
+options:[
+'i. Egypt',
+'ii. U.S.A.',
+'iii. India',
+'iv. Magnesia'
+],
+answer:'iv. Magnesia'
+},
+
+{
+question:'c. The magnet naturally occurred on the Earth is called–',
+options:[
+'i. Lodestone',
+'ii. Magnetite',
+'iii. Magnet',
+'iv. Black magnet'
+],
+answer:'i. Lodestone'
+},
+
+{
+question:'d. Similar poles of two magnets–',
+options:[
+'i. Attract',
+'ii. Attached',
+'iii. Repel',
+'iv. Neutral'
+],
+answer:'iii. Repel'
+},
+
+{
+question:'e. Magnets made with the help of electricity are called–',
+options:[
+'i. Keepers',
+'ii. Bar magnets',
+'iii. Shoe magnets',
+'iv. Electromagnets'
+],
+answer:'iv. Electromagnets'
+},
+
+{
+question:'f. A freely suspended magnet comes to rest in the–',
+options:[
+'i. North-south direction',
+'ii. North-west direction',
+'iii. North-east direction',
+'iv. East-west direction'
+],
+answer:'i. North-south direction'
+}
+
+];
+
+let score = 0;
+let answered = 0;
+
+function loadQuiz(){
+
+const quiz = document.getElementById("quiz");
+quiz.innerHTML = "";
+
+questions.forEach((q,index)=>{
+
+const box = document.createElement("div");
+box.className = "question-box";
+
+const question = document.createElement("div");
+question.className = "question";
+question.innerText = q.question;
+
+box.appendChild(question);
+
+const options = document.createElement("div");
+options.className = "options";
+
+q.options.forEach(option=>{
+
+const btn = document.createElement("button");
+btn.className = "option-btn";
+btn.innerText = option;
+
+btn.onclick = ()=>checkAnswer(btn,option,q.answer,options);
+
+options.appendChild(btn);
+
+});
+
+box.appendChild(options);
+quiz.appendChild(box);
+
+});
+
+}
+
+function checkAnswer(button,selected,correctAnswer,optionsDiv){
+
+const buttons = optionsDiv.querySelectorAll(".option-btn");
+
+buttons.forEach(btn=>{
+btn.disabled = true;
+if(btn.innerText === correctAnswer){
+btn.classList.add("correct");
+}
+});
+
+if(selected === correctAnswer){
+score++;
+}else{
+button.classList.add("wrong");
+}
+
+answered++;
+
+document.getElementById("score").innerText =
+`Score: ${score} / ${questions.length}`;
+
+}
+
+function resetQuiz(){
+score = 0;
+answered = 0;
+document.getElementById("score").innerText =
+`Score: 0 / ${questions.length}`;
+loadQuiz();
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>

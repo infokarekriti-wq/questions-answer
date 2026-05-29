@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Give one word answer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+min-height:100vh;
+background:linear-gradient(135deg,#dff6ff,#ffffff,#e8f5e9);
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.quiz-box{
+width:100%;
+max-width:980px;
+background:#ffffff;
+border-radius:30px;
+padding:35px 28px 40px;
+border:5px solid #00b8f0;
+box-shadow:0 15px 40px rgba(0,0,0,0.12);
+}
+
+.heading{
+font-size:30px;
+font-weight:700;
+color:#00a6d6;
+margin-bottom:25px;
+}
+
+.question-box{
+background:#f9fcff;
+border:2px solid #c9efff;
+border-radius:22px;
+padding:20px;
+margin-bottom:18px;
+}
+
+.question{
+font-size:20px;
+line-height:1.8;
+}
+
+.blank-input{
+width:220px;
+border:none;
+border-bottom:3px solid #888;
+font-size:18px;
+text-align:center;
+outline:none;
+margin-left:10px;
+transition:0.3s;
+}
+
+/* COLORS */
+
+.blank-input.correct{
+border-color:#2e7d32;
+color:#1b5e20;
+font-weight:700;
+}
+
+.blank-input.wrong{
+border-color:#c62828;
+color:#b71c1c;
+font-weight:700;
+}
+
+/* BUTTONS */
+
+.buttons{
+text-align:center;
+margin-top:25px;
+}
+
+.check-btn,
+.reset-btn{
+background:linear-gradient(135deg,#ff9800,#ff6f00);
+color:#fff;
+border:none;
+padding:12px 25px;
+border-radius:30px;
+font-weight:600;
+cursor:pointer;
+margin:5px;
+}
+
+.result{
+text-align:center;
+margin-top:15px;
+font-size:22px;
+font-weight:700;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.quiz-box{
+padding:22px 16px 30px;
+}
+
+.heading{
+font-size:24px;
+}
+
+.question{
+font-size:16px;
+line-height:1.7;
+}
+
+.blank-input{
+width:130px;
+font-size:14px;
+}
+
+.check-btn,
+.reset-btn{
+width:100%;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="quiz-box">
+
+<div class="heading">
+Give one word answer:
+</div>
+
+<!-- QUESTION A -->
+
+<div class="question-box">
+<div class="question">
+a. Man–made magnets
+<input class="blank-input" id="q1">
+</div>
+</div>
+
+<!-- QUESTION B -->
+
+<div class="question-box">
+<div class="question">
+b. The rock that is a natural magnet
+<input class="blank-input" id="q2">
+</div>
+</div>
+
+<!-- QUESTION C -->
+
+<div class="question-box">
+<div class="question">
+c. Two poles repel each other
+<input class="blank-input" id="q3">
+</div>
+</div>
+
+<!-- QUESTION D -->
+
+<div class="question-box">
+<div class="question">
+d. Two ends of the magnet where the magnetic strength is maximum
+<input class="blank-input" id="q4">
+</div>
+</div>
+
+<!-- QUESTION E -->
+
+<div class="question-box">
+<div class="question">
+e. Temperature at which iron loses its magnetic behaviour
+<input class="blank-input" id="q5">
+</div>
+</div>
+
+<!-- QUESTION F -->
+
+<div class="question-box">
+<div class="question">
+f. Shape of magnet used in labs
+<input class="blank-input" id="q6">
+</div>
+</div>
+
+<!-- BUTTONS -->
+
+<div class="buttons">
+
+<button class="check-btn" onclick="checkAnswers()">
+Check Answers
+</button>
+
+<button class="reset-btn" onclick="resetQuiz()">
+Reset
+</button>
+
+</div>
+
+<!-- RESULT -->
+
+<div class="result" id="result">
+Score: 0 / 6
+</div>
+
+</div>
+
+<script>
+
+const answers = {
+
+q1:"artificial magnets",
+q2:"lodestone",
+q3:"like poles",
+q4:"poles",
+q5:"curie temperature",
+q6:"bar magnet"
+
+};
+
+function checkAnswers(){
+
+let score = 0;
+
+Object.keys(answers).forEach(id=>{
+
+let input = document.getElementById(id);
+
+let val = input.value.toLowerCase().trim();
+
+let correct = answers[id];
+
+input.classList.remove("correct","wrong");
+
+if(val === correct){
+
+input.classList.add("correct");
+
+score++;
+
+}else{
+
+input.classList.add("wrong");
+
+
+}
+
+});
+
+document.getElementById("result").innerText =
+`Score: ${score} / 6`;
+
+}
+
+function resetQuiz(){
+
+Object.keys(answers).forEach(id=>{
+
+let input = document.getElementById(id);
+
+input.value = "";
+
+input.classList.remove("correct","wrong");
+
+});
+
+document.getElementById("result").innerText =
+"Score: 0 / 6";
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Fill in the blanks</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* SAME CSS (UNCHANGED) */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+min-height:100vh;
+background:linear-gradient(135deg,#dff6ff,#ffffff,#e8f5e9);
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.quiz-box{
+width:100%;
+max-width:980px;
+background:#ffffff;
+border-radius:30px;
+padding:35px 28px 40px;
+border:5px solid #00b8f0;
+box-shadow:0 15px 40px rgba(0,0,0,0.12);
+position:relative;
+overflow:hidden;
+}
+
+.heading{
+font-size:30px;
+font-weight:700;
+color:#00a6d6;
+margin-bottom:24px;
+}
+
+.word-box{
+background:#ffe4ef;
+display:inline-block;
+padding:12px 24px;
+border-radius:16px;
+font-size:20px;
+font-weight:600;
+color:#8e24aa;
+margin-bottom:30px;
+}
+
+.question-box{
+background:#f9fcff;
+border:2px solid #c9efff;
+border-radius:22px;
+padding:22px;
+margin-bottom:22px;
+}
+
+.question{
+font-size:22px;
+line-height:1.9;
+}
+
+.blank-input{
+width:180px;
+border:none;
+border-bottom:3px solid #888;
+font-size:20px;
+text-align:center;
+outline:none;
+margin:0 5px;
+}
+
+.blank-input.correct{
+border-color:#2e7d32;
+}
+
+.blank-input.wrong{
+border-color:#c62828;
+}
+
+.buttons{
+text-align:center;
+margin-top:28px;
+}
+
+.check-btn,
+.reset-btn{
+background:linear-gradient(135deg,#ff9800,#ff6f00);
+color:#fff;
+border:none;
+padding:14px 30px;
+border-radius:40px;
+font-size:17px;
+font-weight:700;
+cursor:pointer;
+margin:8px;
+}
+
+.result{
+margin-top:22px;
+text-align:center;
+font-size:28px;
+font-weight:700;
+color:#0047ab;
+}
+
+@media(max-width:768px){
+
+.question{
+font-size:17px;
+}
+
+.blank-input{
+width:120px;
+font-size:16px;
+}
+
+.check-btn,.reset-btn{
+width:100%;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="quiz-box">
+
+<div class="heading">
+Fill in the blanks.
+</div>
+
+
+
+<!-- QUESTIONS -->
+
+<div class="question-box">
+<div class="question">
+a. 
+<input class="blank-input" id="q1"> and 
+<input class="blank-input" id="q2"> mainly provide energy to our body.
+</div>
+</div>
+
+<div class="question-box">
+<div class="question">
+b. 
+<input class="blank-input" id="q3"> and 
+<input class="blank-input" id="q4"> are protective foods.
+</div>
+</div>
+
+<div class="question-box">
+<div class="question">
+c. A 
+<input class="blank-input" id="q5"> can prevent deficiency disease.
+</div>
+</div>
+
+<div class="question-box">
+<div class="question">
+d. Deficiency of vitamin D causes 
+<input class="blank-input" id="q6">.
+</div>
+</div>
+
+<div class="question-box">
+<div class="question">
+e. 
+<input class="blank-input" id="q7"> is essential for the production of hemoglobin in the blood.
+</div>
+</div>
+
+<div class="question-box">
+<div class="question">
+f. Diet rich in fats eaten regularly leads to 
+<input class="blank-input" id="q8">.
+</div>
+</div>
+
+<!-- BUTTONS -->
+
+<div class="buttons">
+<button class="check-btn" onclick="checkAnswers()">Check Answers</button>
+<button class="reset-btn" onclick="resetQuiz()">Reset</button>
+</div>
+
+<div class="result" id="result">
+Score: 0 / 6
+</div>
+
+</div>
+
+<script>
+
+const answers = {
+q1:"carbohydrates",
+q2:"fats",
+q3:"fruits",
+q4:"vegetables",
+q5:"balanced diet",
+q6:"rickets",
+q7:"iron",
+q8:"obesity"
+};
+
+function checkAnswers(){
+
+let score = 0;
+
+Object.keys(answers).forEach(id=>{
+
+const input = document.getElementById(id);
+const val = input.value.trim().toLowerCase();
+
+input.classList.remove("correct","wrong");
+
+if(val === answers[id]){
+input.classList.add("correct");
+score++;
+}else{
+input.classList.add("wrong");
+}
+
+});
+
+document.getElementById("result").innerText =
+`Score: ${score} / 8`;
+
+}
+
+function resetQuiz(){
+
+Object.keys(answers).forEach(id=>{
+const input = document.getElementById(id);
+input.value="";
+input.classList.remove("correct","wrong");
+});
+
+document.getElementById("result").innerText =
+"Score: 0 / 8";
+
+}
+
+</script>
+
+</body>
+</html>

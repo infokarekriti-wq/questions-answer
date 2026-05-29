@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Match the following</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+min-height:100vh;
+background:linear-gradient(135deg,#dff6ff,#ffffff,#e8f5e9);
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.quiz-box{
+width:100%;
+max-width:1000px;
+background:#ffffff;
+border-radius:30px;
+padding:35px 28px 40px;
+border:5px solid #00b8f0;
+box-shadow:0 15px 40px rgba(0,0,0,0.12);
+position:relative;
+overflow:hidden;
+}
+
+.heading{
+font-size:30px;
+font-weight:700;
+color:#00a6d6;
+margin-bottom:30px;
+}
+
+.match-wrapper{
+position:relative;
+display:flex;
+justify-content:space-between;
+gap:60px;
+}
+
+svg{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+}
+
+.column{
+width:48%;
+display:flex;
+flex-direction:column;
+gap:18px;
+}
+
+.item-row{
+display:flex;
+align-items:center;
+justify-content:space-between;
+background:#f9fcff;
+border:2px solid #c9efff;
+border-radius:18px;
+padding:14px;
+gap:10px;
+}
+
+.item-text{
+font-size:18px;
+line-height:1.4;
+}
+
+/* DOT */
+
+.dot{
+width:18px;
+height:18px;
+border:3px solid #ff4fa0;
+transform:rotate(45deg);
+cursor:pointer;
+background:#fff;
+transition:0.3s;
+}
+
+.dot.active{
+background:#ff4fa0;
+}
+
+.dot.connected{
+background:#009688;
+border-color:#009688;
+}
+
+/* RESULT */
+
+.result{
+margin-top:25px;
+text-align:center;
+font-size:24px;
+font-weight:700;
+}
+
+.reset-btn{
+margin-top:20px;
+padding:12px 28px;
+background:linear-gradient(135deg,#ff9800,#ff6f00);
+color:#fff;
+border:none;
+border-radius:30px;
+cursor:pointer;
+font-weight:600;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.quiz-box{
+padding:20px 14px 28px;
+}
+
+.heading{
+font-size:22px;
+}
+
+.match-wrapper{
+gap:10px;
+}
+
+.column{
+width:48%;
+gap:10px;
+}
+
+.item-row{
+padding:10px;
+}
+
+.item-text{
+font-size:13px;
+}
+
+.dot{
+width:14px;
+height:14px;
+}
+
+.result{
+font-size:20px;
+}
+
+.reset-btn{
+width:100%;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="quiz-box">
+
+<div class="heading">
+Match the following.
+</div>
+
+<div class="match-wrapper" id="wrapper">
+
+<svg id="svg"></svg>
+
+<!-- LEFT COLUMN -->
+
+<div class="column">
+
+<div class="item-row">
+<div class="item-text">a. Time</div>
+<div class="dot left" data-match="vi"></div>
+</div>
+
+<div class="item-row">
+<div class="item-text">b. Swing</div>
+<div class="dot left" data-match="iii"></div>
+</div>
+
+<div class="item-row">
+<div class="item-text">c. Fan</div>
+<div class="dot left" data-match="ii"></div>
+</div>
+
+<div class="item-row">
+<div class="item-text">d. Length</div>
+<div class="dot left" data-match="i"></div>
+</div>
+
+<div class="item-row">
+<div class="item-text">e. Moon around Earth</div>
+<div class="dot left" data-match="iv"></div>
+</div>
+
+<div class="item-row">
+<div class="item-text">f. Thermometer</div>
+<div class="dot left" data-match="v"></div>
+</div>
+
+</div>
+
+<!-- RIGHT COLUMN -->
+
+<div class="column">
+
+<div class="item-row">
+<div class="dot right" data-id="i"></div>
+<div class="item-text">i. Metre</div>
+</div>
+
+<div class="item-row">
+<div class="dot right" data-id="ii"></div>
+<div class="item-text">ii. Rotational motion</div>
+</div>
+
+<div class="item-row">
+<div class="dot right" data-id="iii"></div>
+<div class="item-text">iii. Oscillatory motion</div>
+</div>
+
+<div class="item-row">
+<div class="dot right" data-id="iv"></div>
+<div class="item-text">iv. Revolution motion</div>
+</div>
+
+<div class="item-row">
+<div class="dot right" data-id="v"></div>
+<div class="item-text">v. Temperature</div>
+</div>
+
+<div class="item-row">
+<div class="dot right" data-id="vi"></div>
+<div class="item-text">vi. Second</div>
+</div>
+
+</div>
+
+</div>
+
+<!-- RESULT -->
+
+<div class="result" id="result">
+Score: 0 / 6
+</div>
+
+<center>
+<button class="reset-btn" onclick="resetGame()">
+Reset
+</button>
+</center>
+
+</div>
+
+<script>
+
+let selected = null;
+let score = 0;
+
+const leftDots = document.querySelectorAll(".left");
+const rightDots = document.querySelectorAll(".right");
+
+const svg = document.getElementById("svg");
+const wrapper = document.getElementById("wrapper");
+
+/* LEFT SELECT */
+
+leftDots.forEach(dot=>{
+
+dot.onclick = ()=>{
+
+if(dot.classList.contains("connected")) return;
+
+leftDots.forEach(d=>d.classList.remove("active"));
+
+dot.classList.add("active");
+
+selected = dot;
+
+};
+
+});
+
+/* RIGHT SELECT */
+
+rightDots.forEach(dot=>{
+
+dot.onclick = ()=>{
+
+if(!selected) return;
+
+if(dot.classList.contains("connected")) return;
+
+drawLine(selected,dot);
+
+if(selected.dataset.match === dot.dataset.id){
+
+score++;
+
+}
+
+selected.classList.remove("active");
+
+selected.classList.add("connected");
+
+dot.classList.add("connected");
+
+selected.style.pointerEvents = "none";
+
+dot.style.pointerEvents = "none";
+
+selected = null;
+
+document.getElementById("result").innerText =
+`Score: ${score} / 6`;
+
+};
+
+});
+
+/* DRAW LINE */
+
+function drawLine(left,right){
+
+const wrapperRect = wrapper.getBoundingClientRect();
+
+const leftRect = left.getBoundingClientRect();
+
+const rightRect = right.getBoundingClientRect();
+
+const x1 = leftRect.left + leftRect.width/2 - wrapperRect.left;
+
+const y1 = leftRect.top + leftRect.height/2 - wrapperRect.top;
+
+const x2 = rightRect.left + rightRect.width/2 - wrapperRect.left;
+
+const y2 = rightRect.top + rightRect.height/2 - wrapperRect.top;
+
+const line = document.createElementNS(
+"http://www.w3.org/2000/svg",
+"line"
+);
+
+line.setAttribute("x1",x1);
+line.setAttribute("y1",y1);
+line.setAttribute("x2",x2);
+line.setAttribute("y2",y2);
+
+line.setAttribute("stroke","#009688");
+line.setAttribute("stroke-width","4");
+
+svg.appendChild(line);
+
+}
+
+/* RESET */
+
+function resetGame(){
+
+svg.innerHTML = "";
+
+score = 0;
+
+document.getElementById("result").innerText =
+"Score: 0 / 6";
+
+leftDots.forEach(dot=>{
+
+dot.classList.remove("active","connected");
+
+dot.style.pointerEvents = "auto";
+
+});
+
+rightDots.forEach(dot=>{
+
+dot.classList.remove("connected");
+
+dot.style.pointerEvents = "auto";
+
+});
+
+selected = null;
+
+}
+
+</script>
+
+</body>
+</html>

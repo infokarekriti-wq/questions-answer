@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Match the following</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+min-height:100vh;
+background:linear-gradient(135deg,#dff6ff,#ffffff,#e8f5e9);
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.quiz-box{
+width:100%;
+max-width:1000px;
+background:#fff;
+border-radius:30px;
+padding:30px;
+border:5px solid #00b8f0;
+box-shadow:0 15px 40px rgba(0,0,0,0.12);
+position:relative;
+overflow:hidden;
+}
+
+.heading{
+font-size:28px;
+font-weight:700;
+color:#00a6d6;
+margin-bottom:25px;
+}
+
+/* WRAPPER FIX */
+
+.match-wrapper{
+position:relative;
+display:flex;
+justify-content:space-between;
+gap:60px;
+}
+
+/* SVG FIX */
+
+svg{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+}
+
+/* COLUMN */
+
+.column{
+width:48%;
+display:flex;
+flex-direction:column;
+gap:18px;
+}
+
+/* ROW */
+
+.item-row{
+display:flex;
+align-items:center;
+justify-content:space-between;
+background:#f9fcff;
+border:2px solid #c9efff;
+border-radius:18px;
+padding:14px;
+gap:10px;
+}
+
+.item-text{
+font-size:16px;
+line-height:1.4;
+}
+
+/* DOT */
+
+.dot{
+width:18px;
+height:18px;
+border:3px solid #ff4fa0;
+transform:rotate(45deg);
+cursor:pointer;
+background:#fff;
+}
+
+.dot.active{
+background:#ff4fa0;
+}
+
+.dot.connected{
+background:#009688;
+border-color:#009688;
+}
+
+/* RESULT */
+
+.result{
+margin-top:20px;
+text-align:center;
+font-size:22px;
+font-weight:700;
+}
+
+.reset-btn{
+margin-top:15px;
+padding:12px 25px;
+background:#ff9800;
+color:#fff;
+border:none;
+border-radius:30px;
+cursor:pointer;
+}
+
+/* MOBILE FIX */
+
+@media(max-width:768px){
+
+.match-wrapper{
+gap:10px;
+}
+
+.column{
+width:48%;
+gap:10px;
+}
+
+.item-row{
+padding:10px;
+}
+
+.item-text{
+font-size:13px;
+}
+
+.dot{
+width:14px;
+height:14px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="quiz-box">
+
+<div class="heading">
+Match the following.
+</div>
+
+<div class="match-wrapper" id="wrapper">
+
+<svg id="svg"></svg>
+
+<!-- LEFT -->
+
+<div class="column">
+
+<div class="item-row">
+<div class="item-text">a. Protective food</div>
+<div class="dot left" data-match="iii"></div>
+</div>
+
+<div class="item-row">
+<div class="item-text">b. Dietary fibre</div>
+<div class="dot left" data-match="i"></div>
+</div>
+
+<div class="item-row">
+<div class="item-text">c. Excess fat</div>
+<div class="dot left" data-match="vi"></div>
+</div>
+
+<div class="item-row">
+<div class="item-text">d. Food</div>
+<div class="dot left" data-match="v"></div>
+</div>
+
+<div class="item-row">
+<div class="item-text">e. Water</div>
+<div class="dot left" data-match="ii"></div>
+</div>
+
+<div class="item-row">
+<div class="item-text">f. Starch</div>
+<div class="dot left" data-match="iv"></div>
+</div>
+
+</div>
+
+<!-- RIGHT -->
+
+<div class="column">
+
+<div class="item-row">
+<div class="dot right" data-id="i"></div>
+<div class="item-text">i. Roughage</div>
+</div>
+
+<div class="item-row">
+<div class="dot right" data-id="ii"></div>
+<div class="item-text">ii. Proper digestion</div>
+</div>
+
+<div class="item-row">
+<div class="dot right" data-id="iii"></div>
+<div class="item-text">iii. Vitamins and minerals</div>
+</div>
+
+<div class="item-row">
+<div class="dot right" data-id="iv"></div>
+<div class="item-text">iv. Potato</div>
+</div>
+
+<div class="item-row">
+<div class="dot right" data-id="v"></div>
+<div class="item-text">v. Energy</div>
+</div>
+
+<div class="item-row">
+<div class="dot right" data-id="vi"></div>
+<div class="item-text">vi. Obesity</div>
+</div>
+
+</div>
+
+</div>
+
+<div class="result" id="result">Score: 0 / 6</div>
+
+<center>
+<button class="reset-btn" onclick="resetGame()">Reset</button>
+</center>
+
+</div>
+
+<script>
+
+let selected = null;
+let score = 0;
+let total = 0;
+
+const left = document.querySelectorAll(".left");
+const right = document.querySelectorAll(".right");
+const svg = document.getElementById("svg");
+const wrapper = document.getElementById("wrapper");
+
+left.forEach(l=>{
+l.onclick=()=>{
+if(l.classList.contains("connected")) return;
+left.forEach(x=>x.classList.remove("active"));
+l.classList.add("active");
+selected=l;
+};
+});
+
+right.forEach(r=>{
+r.onclick=()=>{
+if(!selected || r.classList.contains("connected")) return;
+
+drawLine(selected,r);
+
+if(selected.dataset.match===r.dataset.id){
+score++;
+}
+
+selected.classList.remove("active");
+selected.classList.add("connected");
+r.classList.add("connected");
+
+selected.style.pointerEvents="none";
+r.style.pointerEvents="none";
+
+selected=null;
+total++;
+
+document.getElementById("result").innerText=`Score: ${score} / 6`;
+};
+});
+
+function drawLine(l,r){
+
+const wRect = wrapper.getBoundingClientRect();
+const lRect = l.getBoundingClientRect();
+const rRect = r.getBoundingClientRect();
+
+const x1 = lRect.left + lRect.width/2 - wRect.left;
+const y1 = lRect.top + lRect.height/2 - wRect.top;
+
+const x2 = rRect.left + rRect.width/2 - wRect.left;
+const y2 = rRect.top + rRect.height/2 - wRect.top;
+
+const line = document.createElementNS("http://www.w3.org/2000/svg","line");
+
+line.setAttribute("x1",x1);
+line.setAttribute("y1",y1);
+line.setAttribute("x2",x2);
+line.setAttribute("y2",y2);
+
+line.setAttribute("stroke","#009688");
+line.setAttribute("stroke-width","4");
+
+svg.appendChild(line);
+}
+
+function resetGame(){
+svg.innerHTML="";
+score=0;
+total=0;
+document.getElementById("result").innerText="Score: 0 / 6";
+
+left.forEach(d=>{
+d.classList.remove("active","connected");
+d.style.pointerEvents="auto";
+});
+
+right.forEach(d=>{
+d.classList.remove("connected");
+d.style.pointerEvents="auto";
+});
+
+selected=null;
+}
+
+</script>
+
+</body>
+</html>

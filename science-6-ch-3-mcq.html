@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>MCQ Exercise</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+/* SAME CSS (unchanged) */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#e8f9ff,#ffffff,#eefdf5);
+padding:20px;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+overflow-x:hidden;
+}
+
+.main-box{
+width:100%;
+max-width:1100px;
+background:#fff;
+border-radius:35px;
+padding:15px;
+border:5px solid #00b7ff;
+box-shadow:
+0 20px 40px rgba(0,0,0,0.08),
+0 10px 20px rgba(0,183,255,0.15);
+}
+
+.top-bar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:28px;
+}
+
+.heading{
+font-size:36px;
+font-weight:800;
+color:#00aeea;
+}
+
+.question-box{
+background:#f9fcff;
+border:2px solid #d7f0ff;
+border-radius:24px;
+padding:24px;
+margin-bottom:24px;
+}
+
+.question{
+font-size:22px;
+font-weight:600;
+margin-bottom:15px;
+}
+
+.options{
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+.option-btn{
+background:#fff;
+border:2px solid #ff5ca8;
+border-radius:15px;
+padding:12px 15px;
+font-size:18px;
+cursor:pointer;
+text-align:left;
+}
+
+.option-btn.correct{
+background:#e7f8ea;
+border-color:#2e7d32;
+}
+
+.option-btn.wrong{
+background:#ffebee;
+border-color:#c62828;
+}
+
+.score{
+text-align:center;
+font-size:28px;
+font-weight:700;
+margin-top:20px;
+}
+
+.reset-btn{
+margin-top:20px;
+display:block;
+margin-left:auto;
+margin-right:auto;
+padding:10px 30px;
+border:none;
+background:#ff9800;
+color:#fff;
+border-radius:30px;
+cursor:pointer;
+}
+
+@media(max-width:768px){
+
+.heading{font-size:22px;}
+.question{font-size:16px;}
+.option-btn{font-size:14px;}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="main-box">
+
+<div class="top-bar">
+<div class="heading">Tick (✓) the correct option.</div>
+</div>
+
+<div id="quiz"></div>
+
+<div class="score" id="score">Score: 0 / 6</div>
+
+<button class="reset-btn" onclick="resetQuiz()">Reset</button>
+
+</div>
+
+<script>
+
+const questions = [
+
+{
+question:'a. Which of the following is a primary source of energy for the body?',
+options:[
+'i. Proteins',
+'ii. Fats',
+'iii. Carbohydrates',
+'iv. Vitamins'
+],
+answer:'iii. Carbohydrates'
+},
+
+{
+question:'b. Green leafy vegetables, fresh fruits, whole grains, pulses and nuts are good source of–',
+options:[
+'i. Roughage',
+'ii. Proteins',
+'iii. Vitamins',
+'iv. Fats'
+],
+answer:'i. Roughage'
+},
+
+{
+question:'c. What is the primary function of iodine in our diet?',
+options:[
+'i. Strengthens bones',
+'ii. Improves vision',
+'iii. Prevents goitre',
+'iv. Supports digestion'
+],
+answer:'iii. Prevents goitre'
+},
+
+{
+question:'d. What does an oily patch on paper indicate when testing a food item?',
+options:[
+'i. Presence of fats',
+'ii. Presence of vitamins',
+'iii. Presence of carbohydrate',
+'iv. Presence of proteins'
+],
+answer:'i. Presence of fats'
+},
+
+{
+question:'e. Which of these contains animal fats?',
+options:[
+'i. Apple',
+'ii. Coconut oil',
+'iii. Butter',
+'iv. Groundnut oil'
+],
+answer:'iii. Butter'
+},
+
+{
+question:'f. What are millets known for?',
+options:[
+'i. a source of fats',
+'ii. being easy to cultivate and highly nutrition',
+'iii. a type of fruit',
+'iv. a source of vitamins only'
+],
+answer:'ii. being easy to cultivate and highly nutrition'
+}
+
+];
+
+let score = 0;
+let answered = 0;
+
+function loadQuiz(){
+
+const quiz = document.getElementById("quiz");
+quiz.innerHTML = "";
+
+questions.forEach((q)=>{
+
+const box = document.createElement("div");
+box.className = "question-box";
+
+const question = document.createElement("div");
+question.className = "question";
+question.innerText = q.question;
+
+box.appendChild(question);
+
+const options = document.createElement("div");
+options.className = "options";
+
+q.options.forEach(option=>{
+
+const btn = document.createElement("button");
+btn.className = "option-btn";
+btn.innerText = option;
+
+btn.onclick = ()=>checkAnswer(btn,option,q.answer,options);
+
+options.appendChild(btn);
+
+});
+
+box.appendChild(options);
+quiz.appendChild(box);
+
+});
+
+}
+
+function checkAnswer(button,selected,correctAnswer,optionsDiv){
+
+const buttons = optionsDiv.querySelectorAll(".option-btn");
+
+buttons.forEach(btn=>{
+btn.disabled = true;
+if(btn.innerText === correctAnswer){
+btn.classList.add("correct");
+}
+});
+
+if(selected !== correctAnswer){
+button.classList.add("wrong");
+}else{
+score++;
+}
+
+answered++;
+
+document.getElementById("score").innerText =
+`Score: ${score} / ${questions.length}`;
+
+}
+
+function resetQuiz(){
+score = 0;
+answered = 0;
+document.getElementById("score").innerText =
+`Score: 0 / ${questions.length}`;
+loadQuiz();
+}
+
+loadQuiz();
+
+</script>
+
+</body>
+</html>
